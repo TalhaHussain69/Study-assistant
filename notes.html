@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Notes — Create and organize your study notes with AI assistance." />
+  <title>Notes — StudyAI</title>
+
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>" />
+</head>
+<body>
+
+  <div id="cursor-dot" aria-hidden="true"></div>
+  <div id="cursor-ring" aria-hidden="true"></div>
+  <div id="scroll-progress" role="progressbar" aria-label="Page scroll progress"></div>
+  <div id="toast-container" aria-live="polite"></div>
+  <div class="sidebar-overlay" aria-hidden="true"></div>
+
+  <div class="app-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" aria-label="Main sidebar navigation">
+      <a href="index.html" class="sidebar-logo">
+        <div class="sidebar-logo-icon" aria-hidden="true">🎓</div>
+        <span class="text-gradient">StudyAI</span>
+      </a>
+
+      <nav class="sidebar-nav" aria-label="Dashboard navigation">
+        <p class="sidebar-section-label">Main</p>
+        <a href="dashboard.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">📊</span>
+          Dashboard
+        </a>
+        <a href="chat.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">🤖</span>
+          AI Chat
+          <span class="sidebar-badge">New</span>
+        </a>
+
+        <p class="sidebar-section-label">Study Tools</p>
+        <a href="notes.html" class="sidebar-link active">
+          <span class="sidebar-link-icon" aria-hidden="true">📝</span>
+          Notes
+        </a>
+        <a href="quiz.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">🧠</span>
+          Quiz Generator
+        </a>
+        <a href="flashcards.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">🃏</span>
+          Flashcards
+        </a>
+        <a href="calendar.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">📅</span>
+          Calendar
+        </a>
+
+        <p class="sidebar-section-label">Account</p>
+        <a href="profile.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">👤</span>
+          Profile
+        </a>
+        <a href="settings.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">⚙️</span>
+          Settings
+        </a>
+      </nav>
+
+     <div class="sidebar-footer">
+  <a href="profile.html" class="sidebar-user">
+    <div class="avatar avatar-md" data-user-avatar style="background:var(--grad-primary)">SA</div>
+    <div class="sidebar-user-info">
+      <div class="sidebar-user-name" data-user-name>Loading…</div>
+      <div class="sidebar-user-role" data-user-plan>Free Plan</div>
+    </div>
+  </a>
+  <button class="btn btn-ghost btn-sm" data-logout style="width:100%;justify-content:center;margin-top:0.5rem;color:var(--clr-danger)">
+    🚪 Log Out
+  </button>
+</div>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="main">
+
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="hamburger" aria-label="Toggle sidebar">
+            <span></span><span></span><span></span>
+          </button>
+          <h1 class="topbar-title">Notes</h1>
+        </div>
+
+        <div class="topbar-right">
+          <button class="btn btn-primary btn-sm" onclick="toast('📝 New note created','success',2000)">
+            + New Note
+          </button>
+          <button class="topbar-icon-btn" data-theme-toggle aria-label="Toggle theme" title="Toggle theme">
+            <span data-theme-icon aria-hidden="true">☀️</span>
+          </button>
+          <button class="topbar-icon-btn" id="notif-btn" aria-label="Notifications" title="Notifications">
+            🔔
+            <span class="notif-count">3</span>
+          </button>
+        </div>
+
+        <div class="notif-panel" id="notif-panel" role="region" aria-label="Notifications">
+          <div class="notif-header">
+            <strong style="font-size:0.9rem">Notifications</strong>
+            <button class="btn btn-ghost btn-sm" style="font-size:11px">Mark all read</button>
+          </div>
+          <div class="notif-item">
+            <span class="notif-dot unread" aria-hidden="true"></span>
+            <div>
+              <div style="font-size:0.85rem;font-weight:600">Quiz reminder</div>
+              <div style="font-size:0.75rem;color:var(--txt-muted)">Your Biology quiz is due in 2 hours</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+     <!-- NOTES LAYOUT -->
+<div class="notes-layout">
+
+  <!-- Notes Sidebar List -->
+  <div class="notes-sidebar">
+    <button class="btn btn-primary btn-sm" style="width:100%;justify-content:center;margin-bottom:1rem" onclick="createNewNote()">
+      + New Note
+    </button>
+    <div class="input-group" style="margin-bottom:1rem">
+      <span class="input-icon" aria-hidden="true">🔍</span>
+      <input type="text" class="input" id="note-search" placeholder="Search notes…" aria-label="Search notes" />
+    </div>
+
+    <div id="notes-list-container"></div>
+  </div>
+
+  <!-- Note Editor -->
+  <div class="note-editor">
+    <div class="note-editor-header">
+      <div style="display:flex;align-items:center;gap:0.75rem">
+        <span class="tag" id="note-meta-tag">📘 Note</span>
+        <span style="font-size:0.75rem;color:var(--txt-muted)" id="note-meta-time">Not saved yet</span>
+      </div>
+      <div style="display:flex;gap:0.5rem">
+        <button class="btn btn-ghost btn-sm" title="Summarize with AI" onclick="toast('🤖 AI is summarizing your note…','info',2500)">
+          🤖 AI Summarize
+        </button>
+        <button class="btn btn-ghost btn-sm" title="Delete note" onclick="deleteCurrentNote()">
+          🗑️
+        </button>
+      </div>
+    </div>
+
+    <div class="note-editor-toolbar" role="toolbar" aria-label="Text formatting toolbar">
+      <button class="toolbar-btn" title="Bold">B</button>
+      <button class="toolbar-btn" title="Italic"><i>I</i></button>
+      <button class="toolbar-btn" title="Underline"><u>U</u></button>
+      <div class="toolbar-divider"></div>
+      <button class="toolbar-btn" title="Heading 1">H1</button>
+      <button class="toolbar-btn" title="Heading 2">H2</button>
+      <div class="toolbar-divider"></div>
+      <button class="toolbar-btn" title="Bullet list">☰</button>
+      <button class="toolbar-btn" title="Numbered list">①</button>
+      <button class="toolbar-btn" title="Quote">"</button>
+      <div class="toolbar-divider"></div>
+      <button class="toolbar-btn" title="Insert link">🔗</button>
+      <button class="toolbar-btn" title="Insert image">🖼️</button>
+      <button class="toolbar-btn" title="Code block">{ }</button>
+    </div>
+
+    <input type="text" class="note-title-input" id="note-title-input" placeholder="Untitled Note" aria-label="Note title" />
+    <textarea class="note-body-input" id="note-body-input" placeholder="Start writing…" aria-label="Note content"></textarea>
+  </div>
+
+</div>
+
+  <button id="fab" aria-label="Quick start AI chat" title="Open AI Chat" onclick="window.location.href='chat.html'">
+    🤖
+  </button>
+
+  
+<script src="js/auth.js"></script>
+<script>
+  if (!requireAuth()) { document.write(''); }
+  document.addEventListener('DOMContentLoaded', renderSidebarUser);
+</script>
+<script src="js/main.js"></script>
+<script>
+  let notesData = [];
+  let activeNoteId = null;
+  let saveTimeout = null;
+
+  function loadNotes() {
+    const data = getUserData() || {};
+    notesData = data.notes || [];
+    renderNotesList();
+
+    // Open note from URL ?id=xxx, or most recent, or create first one
+    const params = new URLSearchParams(window.location.search);
+    const urlId = params.get('id');
+    if (urlId && notesData.find(n => n.id === urlId)) {
+      openNote(urlId);
+    } else if (notesData.length > 0) {
+      openNote(notesData[notesData.length - 1].id);
+    } else {
+      createNewNote();
+    }
+  }
+
+  function renderNotesList(filter = '') {
+    const container = document.getElementById('notes-list-container');
+    const filtered = notesData
+      .filter(n => n.title.toLowerCase().includes(filter.toLowerCase()) || n.body.toLowerCase().includes(filter.toLowerCase()))
+      .slice()
+      .reverse();
+
+    if (filtered.length === 0) {
+      container.innerHTML = `<p style="font-size:0.8rem;color:var(--txt-muted);text-align:center;padding:2rem 0">No notes found</p>`;
+      return;
+    }
+
+    container.innerHTML = filtered.map(n => `
+      <div class="note-list-item ${n.id === activeNoteId ? 'active' : ''}" data-note-id="${n.id}">
+        <div class="note-list-item-title">${n.icon || '📘'} ${escapeHtml2(n.title || 'Untitled')}</div>
+        <div class="note-list-item-preview">${escapeHtml2((n.body || '').slice(0, 80) || 'No content yet')}</div>
+      </div>
+    `).join('');
+
+    container.querySelectorAll('.note-list-item').forEach(item => {
+      item.addEventListener('click', () => openNote(item.dataset.noteId));
+    });
+  }
+
+  function openNote(id) {
+    const note = notesData.find(n => n.id === id);
+    if (!note) return;
+    activeNoteId = id;
+    document.getElementById('note-title-input').value = note.title;
+    document.getElementById('note-body-input').value = note.body;
+    document.getElementById('note-meta-time').textContent = `Last edited ${timeAgo2(note.updatedAt)}`;
+    renderNotesList(document.getElementById('note-search').value);
+  }
+
+  function createNewNote() {
+    const newNote = {
+      id: 'n' + Date.now(),
+      title: 'Untitled Note',
+      body: '',
+      icon: '📘',
+      updatedAt: new Date().toISOString(),
+    };
+    notesData.push(newNote);
+    persistNotes();
+    openNote(newNote.id);
+    document.getElementById('note-title-input').focus();
+    toast('📝 New note created', 'success', 1500);
+  }
+
+  function deleteCurrentNote() {
+    if (!activeNoteId) return;
+    notesData = notesData.filter(n => n.id !== activeNoteId);
+    persistNotes();
+    toast('🗑️ Note deleted', 'error', 1500);
+    if (notesData.length > 0) {
+      openNote(notesData[notesData.length - 1].id);
+    } else {
+      createNewNote();
+    }
+  }
+
+  function persistNotes() {
+    const data = getUserData() || {};
+    data.notes = notesData;
+    saveUserData(data);
+    renderNotesList(document.getElementById('note-search').value);
+  }
+
+  function autoSave() {
+    if (!activeNoteId) return;
+    const note = notesData.find(n => n.id === activeNoteId);
+    if (!note) return;
+    note.title = document.getElementById('note-title-input').value || 'Untitled Note';
+    note.body  = document.getElementById('note-body-input').value;
+    note.updatedAt = new Date().toISOString();
+    persistNotes();
+    document.getElementById('note-meta-time').textContent = 'Saved just now';
+  }
+
+  document.getElementById('note-title-input').addEventListener('input', () => {
+    clearTimeout(saveTimeout);
+    saveTimeout = setTimeout(autoSave, 600);
+  });
+  document.getElementById('note-body-input').addEventListener('input', () => {
+    clearTimeout(saveTimeout);
+    saveTimeout = setTimeout(autoSave, 600);
+  });
+  document.getElementById('note-search').addEventListener('input', (e) => renderNotesList(e.target.value));
+
+  document.querySelectorAll('.toolbar-btn').forEach(btn => {
+    btn.addEventListener('click', () => btn.classList.toggle('active'));
+  });
+
+  function escapeHtml2(str) {
+    return String(str).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+  function timeAgo2(isoString) {
+    if (!isoString) return 'never';
+    const diff = Date.now() - new Date(isoString).getTime();
+    const mins = Math.floor(diff / 60000);
+    if (mins < 1) return 'just now';
+    if (mins < 60) return `${mins}m ago`;
+    const hrs = Math.floor(mins / 60);
+    if (hrs < 24) return `${hrs}h ago`;
+    return `${Math.floor(hrs / 24)}d ago`;
+  }
+
+  loadNotes();
+</script>
+</body>
+</html>

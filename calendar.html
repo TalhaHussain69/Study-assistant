@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Calendar — Plan and track your study schedule." />
+  <title>Calendar — StudyAI</title>
+
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>" />
+</head>
+<body>
+
+  <div id="cursor-dot" aria-hidden="true"></div>
+  <div id="cursor-ring" aria-hidden="true"></div>
+  <div id="scroll-progress" role="progressbar" aria-label="Page scroll progress"></div>
+  <div id="toast-container" aria-live="polite"></div>
+  <div class="sidebar-overlay" aria-hidden="true"></div>
+
+  <div class="app-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" aria-label="Main sidebar navigation">
+      <a href="index.html" class="sidebar-logo">
+        <div class="sidebar-logo-icon" aria-hidden="true">🎓</div>
+        <span class="text-gradient">StudyAI</span>
+      </a>
+
+      <nav class="sidebar-nav" aria-label="Dashboard navigation">
+        <p class="sidebar-section-label">Main</p>
+        <a href="dashboard.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">📊</span>
+          Dashboard
+        </a>
+        <a href="chat.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">🤖</span>
+          AI Chat
+          <span class="sidebar-badge">New</span>
+        </a>
+
+        <p class="sidebar-section-label">Study Tools</p>
+        <a href="notes.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">📝</span>
+          Notes
+        </a>
+        <a href="quiz.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">🧠</span>
+          Quiz Generator
+        </a>
+        <a href="flashcards.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">🃏</span>
+          Flashcards
+        </a>
+        <a href="calendar.html" class="sidebar-link active">
+          <span class="sidebar-link-icon" aria-hidden="true">📅</span>
+          Calendar
+        </a>
+
+        <p class="sidebar-section-label">Account</p>
+        <a href="profile.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">👤</span>
+          Profile
+        </a>
+        <a href="settings.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">⚙️</span>
+          Settings
+        </a>
+      </nav>
+
+     <div class="sidebar-footer">
+  <a href="profile.html" class="sidebar-user">
+    <div class="avatar avatar-md" data-user-avatar style="background:var(--grad-primary)">SA</div>
+    <div class="sidebar-user-info">
+      <div class="sidebar-user-name" data-user-name>Loading…</div>
+      <div class="sidebar-user-role" data-user-plan>Free Plan</div>
+    </div>
+  </a>
+  <button class="btn btn-ghost btn-sm" data-logout style="width:100%;justify-content:center;margin-top:0.5rem;color:var(--clr-danger)">
+    🚪 Log Out
+  </button>
+</div>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="main">
+
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="hamburger" aria-label="Toggle sidebar">
+            <span></span><span></span><span></span>
+          </button>
+          <h1 class="topbar-title">Calendar</h1>
+        </div>
+
+        <div class="topbar-right">
+          <button class="btn btn-primary btn-sm" onclick="openModal('event-modal')">
+            + Add Event
+          </button>
+          <button class="topbar-icon-btn" data-theme-toggle aria-label="Toggle theme" title="Toggle theme">
+            <span data-theme-icon aria-hidden="true">☀️</span>
+          </button>
+          <button class="topbar-icon-btn" id="notif-btn" aria-label="Notifications" title="Notifications">
+            🔔
+            <span class="notif-count">3</span>
+          </button>
+        </div>
+
+        <div class="notif-panel" id="notif-panel" role="region" aria-label="Notifications">
+          <div class="notif-header">
+            <strong style="font-size:0.9rem">Notifications</strong>
+          </div>
+          <div class="notif-item">
+            <span class="notif-dot unread" aria-hidden="true"></span>
+            <div>
+              <div style="font-size:0.85rem;font-weight:600">Upcoming exam</div>
+              <div style="font-size:0.75rem;color:var(--txt-muted)">Chemistry midterm in 3 days</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- PAGE CONTENT -->
+      <main class="page-content">
+
+        <div class="cal-page-grid">
+
+          <!-- Full Calendar -->
+          <div class="card reveal">
+            <div class="cal-header">
+              <h2 style="font-size:1.25rem;font-weight:700">June 2026</h2>
+              <div class="cal-nav">
+                <button class="cal-nav-btn" aria-label="Previous month" style="width:36px;height:36px">‹</button>
+                <button class="btn btn-ghost btn-sm">Today</button>
+                <button class="cal-nav-btn" aria-label="Next month" style="width:36px;height:36px">›</button>
+              </div>
+            </div>
+
+            <div class="cal-full-grid">
+              <div class="cal-cell-header">Sun</div>
+              <div class="cal-cell-header">Mon</div>
+              <div class="cal-cell-header">Tue</div>
+              <div class="cal-cell-header">Wed</div>
+              <div class="cal-cell-header">Thu</div>
+              <div class="cal-cell-header">Fri</div>
+              <div class="cal-cell-header">Sat</div>
+
+              <div class="cal-cell"><div class="cal-cell-num">31</div></div>
+              <div class="cal-cell"><div class="cal-cell-num">1</div></div>
+              <div class="cal-cell"><div class="cal-cell-num">2</div></div>
+              <div class="cal-cell"><div class="cal-cell-num">3</div></div>
+              <div class="cal-cell"><div class="cal-cell-num">4</div></div>
+              <div class="cal-cell"><div class="cal-cell-num">5</div><div class="cal-event cal-event-violet">Math Quiz</div></div>
+              <div class="cal-cell"><div class="cal-cell-num">6</div></div>
+
+              <div class="cal-cell"><div class="cal-cell-num">7</div></div>
+              <div class="cal-cell"><div class="cal-cell-num">8</div></div>
+              <div class="cal-cell"><div class="cal-cell-num">9</div><div class="cal-event cal-event-teal">Study Group</div></div>
+              <div class="cal-cell"><div class="cal-cell-num">10</div></div>
+              <div class="cal-cell"><div class="cal-cell-num">11</div></div>
+              <div class="cal-cell"><div class="cal-cell-num">12</div></div>
+              <div class="cal-cell"><div class="cal-cell-num">13</div></div>
+
+              <div class="cal-cell"><div class="cal-cell-num">14</div></div>
+              <div class="cal-cell"><div class="cal-cell-num">15</div></div>
+              <div class="cal-cell"><div class="cal-cell-num">16</div></div>
+              <div class="cal-cell"><div class="cal-cell-num">17</div></div>
+              <div class="cal-cell"><div class="cal-cell-num">18</div><div class="cal-event cal-event-pink">Essay Due</div></div>
+              <div class="cal-cell"><div class="cal-cell-num">19</div></div>
+              <div class="cal-cell"><div class="cal-cell-num">20</div></div>
+
+              <div class="cal-cell"><div class="cal-cell-num">21</div></div>
+              <div class="cal-cell"><div class="cal-cell-num">22</div></div>
+              <div class="cal-cell"><div class="cal-cell-num">23</div><div class="cal-event cal-event-violet">Chem Midterm</div></div>
+              <div class="cal-cell today"><div class="cal-cell-num">24</div><div class="cal-event cal-event-teal">Study Session</div></div>
+              <div class="cal-cell"><div class="cal-cell-num">25</div></div>
+              <div class="cal-cell"><div class="cal-cell-num">26</div></div>
+              <div class="cal-cell"><div class="cal-cell-num">27</div><div class="cal-event cal-event-pink">History Test</div></div>
+
+              <div class="cal-cell"><div class="cal-cell-num">28</div></div>
+              <div class="cal-cell"><div class="cal-cell-num">29</div></div>
+              <div class="cal-cell"><div class="cal-cell-num">30</div></div>
+              <div class="cal-cell"><div class="cal-cell-num">1</div></div>
+              <div class="cal-cell"><div class="cal-cell-num">2</div></div>
+              <div class="cal-cell"><div class="cal-cell-num">3</div></div>
+              <div class="cal-cell"><div class="cal-cell-num">4</div></div>
+            </div>
+          </div>
+
+          <!-- Sidebar: Upcoming Events -->
+          <div style="display:flex;flex-direction:column;gap:1.5rem">
+
+            <div class="card reveal delay-1">
+              <div class="card-header">
+                <div class="card-title">Upcoming Events</div>
+              </div>
+              <div class="note-list">
+                <div class="note-item">
+                  <div class="note-item-icon icon-violet" aria-hidden="true">📐</div>
+                  <div>
+                    <div class="note-item-title">Math Quiz</div>
+                    <div class="note-item-meta">June 5 · 10:00 AM</div>
+                  </div>
+                </div>
+                <div class="note-item">
+                  <div class="note-item-icon icon-teal" aria-hidden="true">👥</div>
+                  <div>
+                    <div class="note-item-title">Study Group</div>
+                    <div class="note-item-meta">June 9 · 4:00 PM</div>
+                  </div>
+                </div>
+                <div class="note-item">
+                  <div class="note-item-icon icon-pink" aria-hidden="true">✍️</div>
+                  <div>
+                    <div class="note-item-title">Essay Due</div>
+                    <div class="note-item-meta">June 18 · 11:59 PM</div>
+                  </div>
+                </div>
+                <div class="note-item">
+                  <div class="note-item-icon icon-amber" aria-hidden="true">⚗️</div>
+                  <div>
+                    <div class="note-item-title">Chemistry Midterm</div>
+                    <div class="note-item-meta">June 23 · 9:00 AM</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card reveal delay-2">
+              <div class="card-header">
+                <div class="card-title">🤖 AI Study Plan</div>
+              </div>
+              <p style="font-size:0.85rem;color:var(--txt-secondary);line-height:1.7;margin-bottom:1rem">
+                Based on your upcoming Chemistry Midterm, I suggest dedicating
+                2 hours daily to review starting this week.
+              </p>
+              <button class="btn btn-primary btn-sm" style="width:100%;justify-content:center" onclick="toast('📅 AI study plan added to calendar','success')">
+                Generate Study Plan
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Add Event Modal -->
+  <div class="modal-overlay" id="event-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title">Add New Event</h2>
+        <button class="btn btn-ghost btn-icon" onclick="closeModal('event-modal')" aria-label="Close modal">✕</button>
+      </div>
+      <div style="display:flex;flex-direction:column;gap:1rem">
+        <div>
+          <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:0.5rem">Event Title</label>
+          <input type="text" class="input" placeholder="e.g. Physics Exam" />
+        </div>
+        <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+          <div>
+            <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:0.5rem">Date</label>
+            <input type="date" class="input" />
+          </div>
+          <div>
+            <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:0.5rem">Time</label>
+            <input type="time" class="input" />
+          </div>
+        </div>
+        <div>
+          <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:0.5rem">Category</label>
+          <select class="input">
+            <option>📐 Exam</option>
+            <option>👥 Study Group</option>
+            <option>✍️ Assignment</option>
+            <option>📚 Study Session</option>
+          </select>
+        </div>
+        <button class="btn btn-primary" style="width:100%;justify-content:center;margin-top:0.5rem"
+          onclick="closeModal('event-modal'); toast('✅ Event added to calendar','success')">
+          Add Event
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <button id="fab" aria-label="Quick start AI chat" title="Open AI Chat" onclick="window.location.href='chat.html'">
+    🤖
+  </button>
+
+  <script src="js/auth.js"></script>
+<script>
+  // Protect this page — redirect to login if not authenticated
+  if (!requireAuth()) { document.write(''); }
+  document.addEventListener('DOMContentLoaded', renderSidebarUser);
+</script>
+
+  <script src="js/main.js"></script>
+</body>
+</html>

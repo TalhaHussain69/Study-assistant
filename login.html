@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Log in to your StudyAI account." />
+  <title>Log In — StudyAI</title>
+
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/landing.css" />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>" />
+
+  <style>
+    .auth-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--sp-6);
+      position: relative;
+      overflow: hidden;
+    }
+    .auth-bg { position: absolute; inset: 0; background: var(--grad-hero); z-index: 0; }
+    .auth-glow {
+      position: absolute;
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(108,99,255,.2) 0%, transparent 65%);
+      top: -200px; left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .auth-card {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 420px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--r-3xl);
+      padding: var(--sp-10) var(--sp-8);
+      box-shadow: var(--shadow-lg);
+    }
+    .auth-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--sp-2);
+      font-family: var(--font-display);
+      font-size: var(--fs-xl);
+      font-weight: var(--fw-black);
+      margin-bottom: var(--sp-6);
+    }
+    .auth-title { font-size: var(--fs-2xl); font-weight: var(--fw-extrabold); text-align: center; margin-bottom: var(--sp-2); }
+    .auth-subtitle { font-size: var(--fs-sm); color: var(--txt-secondary); text-align: center; margin-bottom: var(--sp-8); }
+    .auth-field { margin-bottom: var(--sp-5); }
+    .auth-field label { font-size: var(--fs-sm); font-weight: var(--fw-semibold); display: block; margin-bottom: var(--sp-2); }
+    .auth-error {
+      background: rgba(255,94,125,.1);
+      border: 1px solid rgba(255,94,125,.3);
+      color: var(--clr-danger);
+      font-size: var(--fs-sm);
+      padding: var(--sp-3) var(--sp-4);
+      border-radius: var(--r-lg);
+      margin-bottom: var(--sp-5);
+      display: none;
+    }
+    .auth-error.show { display: block; animation: fadeInUp .3s ease both; }
+    .auth-footer { text-align: center; margin-top: var(--sp-6); font-size: var(--fs-sm); color: var(--txt-secondary); }
+    .auth-footer a { color: var(--clr-primary-light); font-weight: var(--fw-semibold); }
+    .password-toggle {
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: pointer; color: var(--txt-muted); font-size: 16px;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="cursor-dot" aria-hidden="true"></div>
+  <div id="cursor-ring" aria-hidden="true"></div>
+  <div id="toast-container" aria-live="polite"></div>
+
+  <div class="auth-page">
+    <div class="auth-bg"></div>
+    <div class="auth-glow" aria-hidden="true"></div>
+
+    <div class="auth-card anim-scale-in">
+      <a href="index.html" class="auth-logo">
+        <div class="nav-logo-icon" aria-hidden="true">🎓</div>
+        <span class="text-gradient">StudyAI</span>
+      </a>
+
+      <h1 class="auth-title">Welcome back</h1>
+      <p class="auth-subtitle">Log in to continue your learning journey</p>
+
+      <div class="auth-error" id="auth-error" role="alert"></div>
+
+      <form id="login-form" novalidate>
+        <div class="auth-field">
+          <label for="login-email">Email Address</label>
+          <input type="email" id="login-email" class="input" placeholder="you@example.com" required autocomplete="email" />
+        </div>
+
+        <div class="auth-field">
+          <label for="login-password">Password</label>
+          <div style="position:relative">
+            <input type="password" id="login-password" class="input" placeholder="Enter your password" required autocomplete="current-password" style="padding-right:44px" />
+            <button type="button" class="password-toggle" id="toggle-pw" aria-label="Show password">👁️</button>
+          </div>
+        </div>
+
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:var(--sp-6);font-size:var(--fs-sm)">
+          <label style="display:flex;align-items:center;gap:6px;color:var(--txt-secondary);cursor:pointer">
+            <input type="checkbox" id="remember-me" style="cursor:pointer" /> Remember me
+          </label>
+          <a href="#" style="color:var(--clr-primary-light)" onclick="toast('Password reset is a demo feature','info');return false;">Forgot password?</a>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center">
+          Log In
+        </button>
+      </form>
+
+      <div style="display:flex;align-items:center;gap:1rem;margin:1.5rem 0">
+        <div class="divider" style="margin:0"></div>
+        <span style="font-size:0.75rem;color:var(--txt-muted)">OR</span>
+        <div class="divider" style="margin:0"></div>
+      </div>
+
+      <button class="btn btn-outline" style="width:100%;justify-content:center" onclick="toast('🎓 Demo account loaded','success'); document.getElementById('login-email').value='demo@studyai.com'; document.getElementById('login-password').value='demo123';">
+        ✨ Use Demo Account
+      </button>
+
+      <p class="auth-footer">
+        Don't have an account? <a href="register.html">Sign up free</a>
+      </p>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    // If already logged in, redirect to dashboard
+    if (getCurrentUser()) window.location.href = 'dashboard.html';
+
+    // Ensure a demo account always exists
+    (() => {
+      const users = JSON.parse(localStorage.getItem('sa_users')) || {};
+      if (!users['demo@studyai.com']) {
+        registerUser({ name: 'Demo Student', email: 'demo@studyai.com', password: 'demo123' });
+        logoutUser_silent: localStorage.removeItem('sa_session'); // don't auto-login on page load
+      }
+    })();
+
+    document.getElementById('toggle-pw').addEventListener('click', () => {
+      const pw = document.getElementById('login-password');
+      const btn = document.getElementById('toggle-pw');
+      const isPw = pw.type === 'password';
+      pw.type = isPw ? 'text' : 'password';
+      btn.textContent = isPw ? '🙈' : '👁️';
+    });
+
+    document.getElementById('login-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+      const errorBox = document.getElementById('auth-error');
+
+      const result = loginUser({ email, password });
+
+      if (result.success) {
+        errorBox.classList.remove('show');
+        toast(result.message, 'success', 2000);
+        setTimeout(() => window.location.href = 'dashboard.html', 600);
+      } else {
+        errorBox.textContent = '⚠️ ' + result.message;
+        errorBox.classList.add('show');
+      }
+    });
+  </script>
+</body>
+</html>

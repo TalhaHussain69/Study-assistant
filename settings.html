@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Settings — Customize your StudyAI experience." />
+  <title>Settings — StudyAI</title>
+
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>" />
+</head>
+<body>
+
+  <div id="cursor-dot" aria-hidden="true"></div>
+  <div id="cursor-ring" aria-hidden="true"></div>
+  <div id="scroll-progress" role="progressbar" aria-label="Page scroll progress"></div>
+  <div id="toast-container" aria-live="polite"></div>
+  <div class="sidebar-overlay" aria-hidden="true"></div>
+
+  <div class="app-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" aria-label="Main sidebar navigation">
+      <a href="index.html" class="sidebar-logo">
+        <div class="sidebar-logo-icon" aria-hidden="true">🎓</div>
+        <span class="text-gradient">StudyAI</span>
+      </a>
+
+      <nav class="sidebar-nav" aria-label="Dashboard navigation">
+        <p class="sidebar-section-label">Main</p>
+        <a href="dashboard.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">📊</span>
+          Dashboard
+        </a>
+        <a href="chat.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">🤖</span>
+          AI Chat
+          <span class="sidebar-badge">New</span>
+        </a>
+
+        <p class="sidebar-section-label">Study Tools</p>
+        <a href="notes.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">📝</span>
+          Notes
+        </a>
+        <a href="quiz.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">🧠</span>
+          Quiz Generator
+        </a>
+        <a href="flashcards.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">🃏</span>
+          Flashcards
+        </a>
+        <a href="calendar.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">📅</span>
+          Calendar
+        </a>
+
+        <p class="sidebar-section-label">Account</p>
+        <a href="profile.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">👤</span>
+          Profile
+        </a>
+        <a href="settings.html" class="sidebar-link active">
+          <span class="sidebar-link-icon" aria-hidden="true">⚙️</span>
+          Settings
+        </a>
+      </nav>
+
+     <div class="sidebar-footer">
+  <a href="profile.html" class="sidebar-user">
+    <div class="avatar avatar-md" data-user-avatar style="background:var(--grad-primary)">SA</div>
+    <div class="sidebar-user-info">
+      <div class="sidebar-user-name" data-user-name>Loading…</div>
+      <div class="sidebar-user-role" data-user-plan>Free Plan</div>
+    </div>
+  </a>
+  <button class="btn btn-ghost btn-sm" data-logout style="width:100%;justify-content:center;margin-top:0.5rem;color:var(--clr-danger)">
+    🚪 Log Out
+  </button>
+</div>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="main">
+
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="hamburger" aria-label="Toggle sidebar">
+            <span></span><span></span><span></span>
+          </button>
+          <h1 class="topbar-title">Settings</h1>
+        </div>
+
+        <div class="topbar-right">
+          <button class="topbar-icon-btn" data-theme-toggle aria-label="Toggle theme" title="Toggle theme">
+            <span data-theme-icon aria-hidden="true">☀️</span>
+          </button>
+          <button class="topbar-icon-btn" id="notif-btn" aria-label="Notifications" title="Notifications">
+            🔔
+            <span class="notif-count">3</span>
+          </button>
+        </div>
+
+        <div class="notif-panel" id="notif-panel" role="region" aria-label="Notifications">
+          <div class="notif-header"><strong style="font-size:0.9rem">Notifications</strong></div>
+          <div class="notif-item">
+            <span class="notif-dot unread" aria-hidden="true"></span>
+            <div>
+              <div style="font-size:0.85rem;font-weight:600">Settings saved</div>
+              <div style="font-size:0.75rem;color:var(--txt-muted)">Your preferences were updated</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- PAGE CONTENT -->
+      <main class="page-content">
+        <div class="settings-layout">
+
+          <!-- Settings Nav -->
+          <nav class="settings-nav" aria-label="Settings sections">
+            <div class="settings-nav-item active" data-section="account">👤 Account</div>
+            <div class="settings-nav-item" data-section="notifications">🔔 Notifications</div>
+            <div class="settings-nav-item" data-section="appearance">🎨 Appearance</div>
+            <div class="settings-nav-item" data-section="ai">🤖 AI Preferences</div>
+            <div class="settings-nav-item" data-section="privacy">🔒 Privacy & Security</div>
+            <div class="settings-nav-item" data-section="billing">💳 Billing</div>
+          </nav>
+
+          <!-- Settings Content -->
+          <div class="settings-section reveal">
+
+           <!-- Account -->
+<div class="settings-group" id="section-account">
+  <div class="settings-group-header">
+    <div class="settings-group-title">Account Information</div>
+    <div class="settings-group-desc">Update your personal details</div>
+  </div>
+  <div class="settings-row">
+    <div class="settings-row-info">
+      <div class="settings-row-label">Full Name</div>
+      <div class="settings-row-desc" data-user-name>Loading…</div>
+    </div>
+    <button class="btn btn-ghost btn-sm" onclick="openEditModal('name')">Edit</button>
+  </div>
+  <div class="settings-row">
+    <div class="settings-row-info">
+      <div class="settings-row-label">Email Address</div>
+      <div class="settings-row-desc" data-user-email>Loading…</div>
+    </div>
+    <button class="btn btn-ghost btn-sm" onclick="openEditModal('email')">Edit</button>
+  </div>
+  <div class="settings-row">
+    <div class="settings-row-info">
+      <div class="settings-row-label">Password</div>
+      <div class="settings-row-desc">Click to update your password</div>
+    </div>
+    <button class="btn btn-ghost btn-sm" onclick="openEditModal('password')">Change</button>
+  </div>
+</div>
+
+            <!-- Notifications -->
+            <div class="settings-group" id="section-notifications">
+              <div class="settings-group-header">
+                <div class="settings-group-title">Notification Preferences</div>
+                <div class="settings-group-desc">Choose what you want to be notified about</div>
+              </div>
+              <div class="settings-row">
+                <div class="settings-row-info">
+                  <div class="settings-row-label">Quiz Reminders</div>
+                  <div class="settings-row-desc">Get notified about upcoming quizzes</div>
+                </div>
+                <label class="toggle">
+                  <input type="checkbox" checked />
+                  <span class="toggle-track"></span>
+                </label>
+              </div>
+              <div class="settings-row">
+                <div class="settings-row-info">
+                  <div class="settings-row-label">Study Streak Alerts</div>
+                  <div class="settings-row-desc">Daily reminder to maintain your streak</div>
+                </div>
+                <label class="toggle">
+                  <input type="checkbox" checked />
+                  <span class="toggle-track"></span>
+                </label>
+              </div>
+              <div class="settings-row">
+                <div class="settings-row-info">
+                  <div class="settings-row-label">Email Newsletter</div>
+                  <div class="settings-row-desc">Tips and updates from StudyAI</div>
+                </div>
+                <label class="toggle">
+                  <input type="checkbox" />
+                  <span class="toggle-track"></span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Appearance -->
+            <div class="settings-group" id="section-appearance">
+              <div class="settings-group-header">
+                <div class="settings-group-title">Appearance</div>
+                <div class="settings-group-desc">Customize how StudyAI looks</div>
+              </div>
+              <div class="settings-row">
+                <div class="settings-row-info">
+                  <div class="settings-row-label">Dark Mode</div>
+                  <div class="settings-row-desc">Toggle between light and dark theme</div>
+                </div>
+                <label class="toggle">
+                  <input type="checkbox" id="settings-theme-toggle" checked />
+                  <span class="toggle-track"></span>
+                </label>
+              </div>
+              <div class="settings-row">
+                <div class="settings-row-info">
+                  <div class="settings-row-label">Reduce Motion</div>
+                  <div class="settings-row-desc">Minimize animations across the app</div>
+                </div>
+                <label class="toggle">
+                  <input type="checkbox" />
+                  <span class="toggle-track"></span>
+                </label>
+              </div>
+              <div class="settings-row">
+                <div class="settings-row-info">
+                  <div class="settings-row-label">Custom Cursor</div>
+                  <div class="settings-row-desc">Show the animated cursor effect</div>
+                </div>
+                <label class="toggle">
+                  <input type="checkbox" checked />
+                  <span class="toggle-track"></span>
+                </label>
+              </div>
+            </div>
+
+            <!-- AI Preferences -->
+            <div class="settings-group" id="section-ai">
+              <div class="settings-group-header">
+                <div class="settings-group-title">AI Preferences</div>
+                <div class="settings-group-desc">Control how the AI assistant behaves</div>
+              </div>
+              <div class="settings-row">
+                <div class="settings-row-info">
+                  <div class="settings-row-label">Response Style</div>
+                  <div class="settings-row-desc">How detailed AI responses should be</div>
+                </div>
+                <select class="input" style="width:160px">
+                  <option>Concise</option>
+                  <option selected>Balanced</option>
+                  <option>Detailed</option>
+                </select>
+              </div>
+              <div class="settings-row">
+                <div class="settings-row-info">
+                  <div class="settings-row-label">Auto-generate Flashcards</div>
+                  <div class="settings-row-desc">Create flashcards automatically from notes</div>
+                </div>
+                <label class="toggle">
+                  <input type="checkbox" checked />
+                  <span class="toggle-track"></span>
+                </label>
+              </div>
+              <div class="settings-row">
+                <div class="settings-row-info">
+                  <div class="settings-row-label">Voice Input</div>
+                  <div class="settings-row-desc">Enable microphone for chat input</div>
+                </div>
+                <label class="toggle">
+                  <input type="checkbox" checked />
+                  <span class="toggle-track"></span>
+                </label>
+              </div>
+            </div>
+
+            <!-- Privacy -->
+            <div class="settings-group" id="section-privacy">
+              <div class="settings-group-header">
+                <div class="settings-group-title">Privacy & Security</div>
+                <div class="settings-group-desc">Manage your data and security</div>
+              </div>
+              <div class="settings-row">
+                <div class="settings-row-info">
+                  <div class="settings-row-label">Two-Factor Authentication</div>
+                  <div class="settings-row-desc">Add an extra layer of security</div>
+                </div>
+                <label class="toggle">
+                  <input type="checkbox" />
+                  <span class="toggle-track"></span>
+                </label>
+              </div>
+              <div class="settings-row">
+                <div class="settings-row-info">
+                  <div class="settings-row-label">Download My Data</div>
+                  <div class="settings-row-desc">Export all your notes and progress</div>
+                </div>
+                <button class="btn btn-ghost btn-sm">Download</button>
+              </div>
+              <div class="settings-row">
+                <div class="settings-row-info">
+                  <div class="settings-row-label" style="color:var(--clr-danger)">Delete Account</div>
+                  <div class="settings-row-desc">Permanently delete your account and data</div>
+                </div>
+                <button class="btn btn-ghost btn-sm" style="color:var(--clr-danger)" onclick="openModal('delete-modal')">Delete</button>
+              </div>
+            </div>
+
+            <!-- Billing -->
+            <div class="settings-group" id="section-billing">
+              <div class="settings-group-header">
+                <div class="settings-group-title">Billing</div>
+                <div class="settings-group-desc">Manage your subscription</div>
+              </div>
+              <div class="settings-row">
+                <div class="settings-row-info">
+                  <div class="settings-row-label">Current Plan</div>
+                  <div class="settings-row-desc">Pro Plan — $19/month</div>
+                </div>
+                <span class="badge badge-primary">Active</span>
+              </div>
+              <div class="settings-row">
+                <div class="settings-row-info">
+                  <div class="settings-row-label">Next Billing Date</div>
+                  <div class="settings-row-desc">July 24, 2026</div>
+                </div>
+              </div>
+              <div class="settings-row">
+                <div class="settings-row-info">
+                  <div class="settings-row-label">Payment Method</div>
+                  <div class="settings-row-desc">Visa ending in 4242</div>
+                </div>
+                <button class="btn btn-ghost btn-sm">Update</button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Delete Account Modal -->
+  <div class="modal-overlay" id="delete-modal">
+    <div class="modal">
+      <div class="modal-header">
+        <h2 class="modal-title" style="color:var(--clr-danger)">⚠️ Delete Account</h2>
+        <button class="btn btn-ghost btn-icon" onclick="closeModal('delete-modal')" aria-label="Close modal">✕</button>
+      </div>
+      <p style="color:var(--txt-secondary);font-size:0.9rem;line-height:1.7;margin-bottom:1.5rem">
+        This action is <strong>permanent</strong> and cannot be undone. All your notes,
+        quizzes, flashcards, and progress data will be deleted forever.
+      </p>
+      <div style="display:flex;gap:1rem">
+        <button class="btn btn-outline" style="flex:1;justify-content:center" onclick="closeModal('delete-modal')">Cancel</button>
+       <button class="btn" style="flex:1;justify-content:center;background:var(--clr-danger);color:#fff"
+  onclick="closeModal('delete-modal'); deleteCurrentUser(); toast('Account deleted','info'); setTimeout(()=>window.location.href='login.html',800)">
+  Yes, Delete
+</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Field Modal (Name / Email / Password) -->
+<div class="modal-overlay" id="edit-modal">
+  <div class="modal">
+    <div class="modal-header">
+      <h2 class="modal-title" id="edit-modal-title">Edit Field</h2>
+      <button class="btn btn-ghost btn-icon" onclick="closeModal('edit-modal')" aria-label="Close modal">✕</button>
+    </div>
+
+    <!-- Name / Email single field -->
+    <div id="edit-single-field" style="display:none">
+      <div style="margin-bottom:1.5rem">
+        <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:0.5rem" id="edit-field-label">Value</label>
+        <input type="text" class="input" id="edit-field-input" />
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="saveEditField()">Save Changes</button>
+    </div>
+
+    <!-- Password change (3 fields) -->
+    <div id="edit-password-fields" style="display:none">
+      <div style="margin-bottom:1rem">
+        <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:0.5rem">Current Password</label>
+        <input type="password" class="input" id="edit-old-password" />
+      </div>
+      <div style="margin-bottom:1rem">
+        <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:0.5rem">New Password</label>
+        <input type="password" class="input" id="edit-new-password" placeholder="Min. 6 characters" />
+      </div>
+      <div style="margin-bottom:1.5rem">
+        <label style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:0.5rem">Confirm New Password</label>
+        <input type="password" class="input" id="edit-confirm-password" />
+      </div>
+      <button class="btn btn-primary" style="width:100%;justify-content:center" onclick="savePasswordChange()">Update Password</button>
+    </div>
+  </div>
+</div>
+
+  <button id="fab" aria-label="Quick start AI chat" title="Open AI Chat" onclick="window.location.href='chat.html'">
+    🤖
+  </button>
+
+ <script src="js/auth.js"></script>
+<script>
+  if (!requireAuth()) { document.write(''); }
+  document.addEventListener('DOMContentLoaded', renderSidebarUser);
+</script>
+<script src="js/main.js"></script>
+<script>
+  // Settings nav section switching
+  document.querySelectorAll('.settings-nav-item').forEach(item => {
+    item.addEventListener('click', () => {
+      document.querySelectorAll('.settings-nav-item').forEach(i => i.classList.remove('active'));
+      item.classList.add('active');
+      const target = document.getElementById('section-' + item.dataset.section);
+      if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
+  });
+
+  // Sync settings dark mode toggle with theme
+  const settingsThemeToggle = document.getElementById('settings-theme-toggle');
+  if (settingsThemeToggle) {
+    settingsThemeToggle.checked = document.documentElement.getAttribute('data-theme') === 'dark';
+    settingsThemeToggle.addEventListener('change', () => {
+      const theme = settingsThemeToggle.checked ? 'dark' : 'light';
+      document.documentElement.setAttribute('data-theme', theme);
+      localStorage.setItem('sa-theme', theme);
+      toast(`Switched to ${theme} mode`, 'success', 2000);
+    });
+  }
+
+  /* ── Edit Name / Email / Password Modal Logic ── */
+  let currentEditField = null;
+
+  function openEditModal(field) {
+    currentEditField = field;
+    const user = getCurrentUser();
+    const title = document.getElementById('edit-modal-title');
+    const singleBlock = document.getElementById('edit-single-field');
+    const pwBlock = document.getElementById('edit-password-fields');
+
+    if (field === 'password') {
+      title.textContent = 'Change Password';
+      singleBlock.style.display = 'none';
+      pwBlock.style.display = 'block';
+      document.getElementById('edit-old-password').value = '';
+      document.getElementById('edit-new-password').value = '';
+      document.getElementById('edit-confirm-password').value = '';
+    } else {
+      singleBlock.style.display = 'block';
+      pwBlock.style.display = 'none';
+      if (field === 'name') {
+        title.textContent = 'Edit Full Name';
+        document.getElementById('edit-field-label').textContent = 'Full Name';
+        document.getElementById('edit-field-input').type = 'text';
+        document.getElementById('edit-field-input').value = user.name;
+      } else if (field === 'email') {
+        title.textContent = 'Edit Email Address';
+        document.getElementById('edit-field-label').textContent = 'Email Address';
+        document.getElementById('edit-field-input').type = 'email';
+        document.getElementById('edit-field-input').value = user.email;
+      }
+    }
+    openModal('edit-modal');
+  }
+
+  function saveEditField() {
+    const value = document.getElementById('edit-field-input').value.trim();
+    if (!value) { toast('⚠️ This field cannot be empty', 'error'); return; }
+
+    if (currentEditField === 'name') {
+      updateCurrentUser({ name: value });
+      toast('✅ Name updated successfully', 'success');
+    } else if (currentEditField === 'email') {
+      if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(value)) {
+        toast('⚠️ Please enter a valid email address', 'error');
+        return;
+      }
+      toast('✅ Email updated successfully', 'success');
+      // Note: changing email key isn't migrated in this simple demo store —
+      // display value updates immediately for the session.
+      updateCurrentUser({ email: value });
+    }
+
+    closeModal('edit-modal');
+    renderSidebarUser();
+    document.querySelectorAll('[data-user-name]').forEach(el => el.textContent = getCurrentUser().name);
+    document.querySelectorAll('[data-user-email]').forEach(el => el.textContent = getCurrentUser().email);
+  }
+
+  function savePasswordChange() {
+    const oldPw = document.getElementById('edit-old-password').value;
+    const newPw = document.getElementById('edit-new-password').value;
+    const confirmPw = document.getElementById('edit-confirm-password').value;
+
+    if (newPw !== confirmPw) { toast('⚠️ New passwords do not match', 'error'); return; }
+
+    const result = changePassword(oldPw, newPw);
+    if (result.success) {
+      toast('✅ ' + result.message, 'success');
+      closeModal('edit-modal');
+    } else {
+      toast('⚠️ ' + result.message, 'error');
+    }
+  }
+</script>
+</body>
+</html>

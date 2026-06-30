@@ -1,0 +1,298 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Profile — Your StudyAI account and achievements." />
+  <title>Profile — StudyAI</title>
+
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>" />
+</head>
+<body>
+
+  <div id="cursor-dot" aria-hidden="true"></div>
+  <div id="cursor-ring" aria-hidden="true"></div>
+  <div id="scroll-progress" role="progressbar" aria-label="Page scroll progress"></div>
+  <div id="toast-container" aria-live="polite"></div>
+  <div class="sidebar-overlay" aria-hidden="true"></div>
+
+  <div class="app-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" aria-label="Main sidebar navigation">
+      <a href="index.html" class="sidebar-logo">
+        <div class="sidebar-logo-icon" aria-hidden="true">🎓</div>
+        <span class="text-gradient">StudyAI</span>
+      </a>
+
+      <nav class="sidebar-nav" aria-label="Dashboard navigation">
+        <p class="sidebar-section-label">Main</p>
+        <a href="dashboard.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">📊</span>
+          Dashboard
+        </a>
+        <a href="chat.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">🤖</span>
+          AI Chat
+          <span class="sidebar-badge">New</span>
+        </a>
+
+        <p class="sidebar-section-label">Study Tools</p>
+        <a href="notes.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">📝</span>
+          Notes
+        </a>
+        <a href="quiz.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">🧠</span>
+          Quiz Generator
+        </a>
+        <a href="flashcards.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">🃏</span>
+          Flashcards
+        </a>
+        <a href="calendar.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">📅</span>
+          Calendar
+        </a>
+
+        <p class="sidebar-section-label">Account</p>
+        <a href="profile.html" class="sidebar-link active">
+          <span class="sidebar-link-icon" aria-hidden="true">👤</span>
+          Profile
+        </a>
+        <a href="settings.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">⚙️</span>
+          Settings
+        </a>
+      </nav>
+
+     <div class="sidebar-footer">
+  <a href="profile.html" class="sidebar-user">
+    <div class="avatar avatar-md" data-user-avatar style="background:var(--grad-primary)">SA</div>
+    <div class="sidebar-user-info">
+      <div class="sidebar-user-name" data-user-name>Loading…</div>
+      <div class="sidebar-user-role" data-user-plan>Free Plan</div>
+    </div>
+  </a>
+  <button class="btn btn-ghost btn-sm" data-logout style="width:100%;justify-content:center;margin-top:0.5rem;color:var(--clr-danger)">
+    🚪 Log Out
+  </button>
+</div>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="main">
+
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="hamburger" aria-label="Toggle sidebar">
+            <span></span><span></span><span></span>
+          </button>
+          <h1 class="topbar-title">Profile</h1>
+        </div>
+
+        <div class="topbar-right">
+          <button class="topbar-icon-btn" data-theme-toggle aria-label="Toggle theme" title="Toggle theme">
+            <span data-theme-icon aria-hidden="true">☀️</span>
+          </button>
+          <button class="topbar-icon-btn" id="notif-btn" aria-label="Notifications" title="Notifications">
+            🔔
+            <span class="notif-count">3</span>
+          </button>
+        </div>
+
+        <div class="notif-panel" id="notif-panel" role="region" aria-label="Notifications">
+          <div class="notif-header"><strong style="font-size:0.9rem">Notifications</strong></div>
+          <div class="notif-item">
+            <span class="notif-dot unread" aria-hidden="true"></span>
+            <div>
+              <div style="font-size:0.85rem;font-weight:600">Achievement unlocked</div>
+              <div style="font-size:0.75rem;color:var(--txt-muted)">14-Day Streak Badge earned!</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- PAGE CONTENT -->
+      <main class="page-content">
+
+       <!-- Profile Header Card -->
+<div class="card reveal" style="display:flex;align-items:center;gap:2rem;flex-wrap:wrap">
+  <div class="avatar avatar-xl" data-user-avatar style="background:var(--grad-primary)">..</div>
+  <div style="flex:1;min-width:200px">
+    <h2 style="font-size:1.5rem;font-weight:800;margin-bottom:0.25rem" data-user-name>Loading…</h2>
+    <p style="color:var(--txt-secondary);font-size:0.9rem;margin-bottom:0.75rem">
+      <span data-user-email>...</span> · <span id="profile-bio">Student</span>
+    </p>
+    <div style="display:flex;gap:0.5rem;flex-wrap:wrap">
+      <span class="badge badge-primary" data-user-plan>Free Plan</span>
+      <span class="badge badge-success">Verified</span>
+      <span class="badge badge-warning" id="profile-streak">🔥 1 Day Streak</span>
+    </div>
+  </div>
+  <button class="btn btn-outline" onclick="window.location.href='settings.html'">✏️ Edit Profile</button>
+</div>
+
+        <!-- Stats Row -->
+<div class="stat-row">
+  <div class="stat-widget" style="color:var(--clr-primary)">
+    <div class="stat-widget-icon icon-violet" style="margin-bottom:0.5rem" aria-hidden="true">📚</div>
+    <div class="stat-widget-value" id="stat-study-time">0h</div>
+    <div class="stat-widget-label">Total Study Time</div>
+  </div>
+  <div class="stat-widget" style="color:var(--clr-accent)">
+    <div class="stat-widget-icon icon-teal" style="margin-bottom:0.5rem" aria-hidden="true">🧠</div>
+    <div class="stat-widget-value" id="stat-topics">0</div>
+    <div class="stat-widget-label">Topics Mastered</div>
+  </div>
+  <div class="stat-widget" style="color:var(--clr-warning)">
+    <div class="stat-widget-icon icon-amber" style="margin-bottom:0.5rem" aria-hidden="true">🏆</div>
+    <div class="stat-widget-value" id="stat-achievements">0</div>
+    <div class="stat-widget-label">Achievements</div>
+  </div>
+  <div class="stat-widget" style="color:var(--clr-success)">
+    <div class="stat-widget-icon icon-green" style="margin-bottom:0.5rem" aria-hidden="true">📈</div>
+    <div class="stat-widget-value" id="stat-avg-score">0%</div>
+    <div class="stat-widget-label">Avg Quiz Score</div>
+  </div>
+</div>
+
+          <!-- Achievements -->
+          <div class="card dash-col-2 reveal delay-1">
+            <div class="card-header">
+              <div class="card-title">🏆 Achievements</div>
+            </div>
+            <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:1rem">
+              <div style="text-align:center;padding:1rem;background:var(--bg-glass);border-radius:var(--r-xl);border:1px solid var(--border-subtle)">
+                <div style="font-size:2rem;margin-bottom:0.5rem">🔥</div>
+                <div style="font-size:0.75rem;font-weight:600">14 Day Streak</div>
+              </div>
+              <div style="text-align:center;padding:1rem;background:var(--bg-glass);border-radius:var(--r-xl);border:1px solid var(--border-subtle)">
+                <div style="font-size:2rem;margin-bottom:0.5rem">🎯</div>
+                <div style="font-size:0.75rem;font-weight:600">100 Quizzes</div>
+              </div>
+              <div style="text-align:center;padding:1rem;background:var(--bg-glass);border-radius:var(--r-xl);border:1px solid var(--border-subtle)">
+                <div style="font-size:2rem;margin-bottom:0.5rem">⭐</div>
+                <div style="font-size:0.75rem;font-weight:600">Perfect Score</div>
+              </div>
+              <div style="text-align:center;padding:1rem;background:var(--bg-glass);border-radius:var(--r-xl);border:1px solid var(--border-subtle)">
+                <div style="font-size:2rem;margin-bottom:0.5rem">📚</div>
+                <div style="font-size:0.75rem;font-weight:600">50 Notes</div>
+              </div>
+              <div style="text-align:center;padding:1rem;background:var(--bg-glass);border-radius:var(--r-xl);border:1px solid var(--border-subtle);opacity:.35">
+                <div style="font-size:2rem;margin-bottom:0.5rem">🌙</div>
+                <div style="font-size:0.75rem;font-weight:600">Night Owl</div>
+              </div>
+              <div style="text-align:center;padding:1rem;background:var(--bg-glass);border-radius:var(--r-xl);border:1px solid var(--border-subtle);opacity:.35">
+                <div style="font-size:2rem;margin-bottom:0.5rem">🚀</div>
+                <div style="font-size:0.75rem;font-weight:600">Speed Learner</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Subject Mastery -->
+          <div class="card reveal delay-2">
+            <div class="card-header">
+              <div class="card-title">Subject Mastery</div>
+            </div>
+            <div style="display:flex;flex-direction:column;gap:1rem">
+              <div>
+                <div>
+  <div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:0.4rem">
+    <span>Biology</span><span style="color:var(--txt-muted)">92%</span>
+  </div>
+  <div class="progress-track"><div class="progress-fill" style="width:92%"></div></div>
+</div>
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:0.4rem">
+                  <span>Chemistry</span><span style="color:var(--txt-muted)">78%</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width:78%"></div></div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:0.4rem">
+                  <span>Mathematics</span><span style="color:var(--txt-muted)">65%</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width:65%"></div></div>
+              </div>
+              <div>
+                <div style="display:flex;justify-content:space-between;font-size:0.8rem;margin-bottom:0.4rem">
+                  <span>History</span><span style="color:var(--txt-muted)">88%</span>
+                </div>
+                <div class="progress-track"><div class="progress-fill" style="width:88%"></div></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Activity Chart -->
+          <div class="card dash-col-3 reveal delay-3">
+            <div class="card-header">
+              <div class="card-title">Activity Overview</div>
+              <div class="card-subtitle">Past 7 days</div>
+            </div>
+            <svg id="profile-bar-chart" width="100%" height="120" viewBox="0 0 300 120" preserveAspectRatio="none" role="img" aria-label="Weekly activity bar chart"></svg>
+          </div>
+
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <button id="fab" aria-label="Quick start AI chat" title="Open AI Chat" onclick="window.location.href='chat.html'">
+    🤖
+  </button>
+
+ <script src="js/auth.js"></script>
+<script>
+  if (!requireAuth()) { document.write(''); }
+  document.addEventListener('DOMContentLoaded', renderSidebarUser);
+</script>
+<script src="js/main.js"></script>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    drawBarChart('profile-bar-chart', [4, 7, 5, 9, 6, 8, 3], ['M','T','W','T','F','S','S'], '#6C63FF');
+    renderProfileStats();
+  });
+
+  function renderProfileStats() {
+    const user = getCurrentUser();
+    const data = getUserData() || {};
+    if (!user) return;
+
+    // Bio / role line
+    document.getElementById('profile-bio').textContent = user.bio || 'Student';
+
+    // Streak badge
+    const streak = data.studyStreak || 1;
+    document.getElementById('profile-streak').textContent = `🔥 ${streak} Day Streak`;
+
+    // Stats
+    const studyHours = Math.round((data.studyMinutes || 0) / 60 * 10) / 10;
+    document.getElementById('stat-study-time').textContent = studyHours + 'h';
+
+    const topicsMastered = (data.flashcardStats && data.flashcardStats.mastered) || 0;
+    document.getElementById('stat-topics').textContent = topicsMastered;
+
+    const quizScores = data.quizScores || [];
+    const avgScore = quizScores.length
+      ? Math.round(quizScores.reduce((sum, q) => sum + q.score, 0) / quizScores.length)
+      : 0;
+    document.getElementById('stat-avg-score').textContent = avgScore + '%';
+
+    // Achievements = simple count based on activity milestones
+    let achievements = 0;
+    if (streak >= 1) achievements++;
+    if ((data.notes || []).length >= 1) achievements++;
+    if (quizScores.length >= 1) achievements++;
+    if (topicsMastered >= 1) achievements++;
+    document.getElementById('stat-achievements').textContent = achievements;
+  }
+</script>
+</body>
+</html>

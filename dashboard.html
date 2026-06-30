@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="StudyAI Dashboard — Track your study progress, notes, tasks and AI assistant." />
+  <title>Dashboard — StudyAI</title>
+
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>" />
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div id="cursor-dot" aria-hidden="true"></div>
+  <div id="cursor-ring" aria-hidden="true"></div>
+
+  <!-- Scroll Progress -->
+  <div id="scroll-progress" role="progressbar" aria-label="Page scroll progress"></div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" aria-live="polite"></div>
+
+  <!-- Sidebar Overlay (mobile) -->
+  <div class="sidebar-overlay" aria-hidden="true"></div>
+
+  <div class="app-layout">
+
+    <!-- ══════════════════════════════════════
+         SIDEBAR
+    ══════════════════════════════════════ -->
+    <aside class="sidebar" aria-label="Main sidebar navigation">
+
+      <a href="index.html" class="sidebar-logo">
+        <div class="sidebar-logo-icon" aria-hidden="true">🎓</div>
+        <span class="text-gradient">StudyAI</span>
+      </a>
+
+      <nav class="sidebar-nav" aria-label="Dashboard navigation">
+
+        <p class="sidebar-section-label">Main</p>
+        <a href="dashboard.html" class="sidebar-link active">
+          <span class="sidebar-link-icon" aria-hidden="true">📊</span>
+          Dashboard
+        </a>
+        <a href="chat.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">🤖</span>
+          AI Chat
+          <span class="sidebar-badge">New</span>
+        </a>
+
+        <p class="sidebar-section-label">Study Tools</p>
+        <a href="notes.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">📝</span>
+          Notes
+        </a>
+        <a href="quiz.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">🧠</span>
+          Quiz Generator
+        </a>
+        <a href="flashcards.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">🃏</span>
+          Flashcards
+        </a>
+        <a href="calendar.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">📅</span>
+          Calendar
+        </a>
+
+        <p class="sidebar-section-label">Account</p>
+        <a href="profile.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">👤</span>
+          Profile
+        </a>
+        <a href="settings.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">⚙️</span>
+          Settings
+        </a>
+      </nav>
+
+     <div class="sidebar-footer">
+  <a href="profile.html" class="sidebar-user">
+    <div class="avatar avatar-md" data-user-avatar style="background:var(--grad-primary)">SA</div>
+    <div class="sidebar-user-info">
+      <div class="sidebar-user-name" data-user-name>Loading…</div>
+      <div class="sidebar-user-role" data-user-plan>Free Plan</div>
+    </div>
+  </a>
+  <button class="btn btn-ghost btn-sm" data-logout style="width:100%;justify-content:center;margin-top:0.5rem;color:var(--clr-danger)">
+    🚪 Log Out
+  </button>
+</div>
+    </aside>
+
+    <!-- ══════════════════════════════════════
+         MAIN CONTENT
+    ══════════════════════════════════════ -->
+    <div class="main">
+
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="hamburger" aria-label="Toggle sidebar">
+            <span></span><span></span><span></span>
+          </button>
+          <h1 class="topbar-title">Dashboard</h1>
+          <div class="topbar-search input-group hide-mobile">
+            <span class="input-icon" aria-hidden="true">🔍</span>
+            <input type="text" class="input" placeholder="Search notes, topics, flashcards…" aria-label="Search" />
+          </div>
+        </div>
+
+        <div class="topbar-right">
+          <button class="topbar-icon-btn" data-theme-toggle aria-label="Toggle theme" title="Toggle theme">
+            <span data-theme-icon aria-hidden="true">☀️</span>
+          </button>
+
+          <button class="topbar-icon-btn" id="notif-btn" aria-label="Notifications" title="Notifications">
+            🔔
+            <span class="notif-count">3</span>
+          </button>
+
+          <a href="profile.html" class="avatar avatar-sm hide-mobile" style="background:var(--grad-primary)">SA</a>
+        </div>
+
+        <!-- Notification Panel -->
+        <div class="notif-panel" id="notif-panel" role="region" aria-label="Notifications">
+          <div class="notif-header">
+            <strong style="font-size:0.9rem">Notifications</strong>
+            <button class="btn btn-ghost btn-sm" style="font-size:11px">Mark all read</button>
+          </div>
+          <div class="notif-item">
+            <span class="notif-dot unread" aria-hidden="true"></span>
+            <div>
+              <div style="font-size:0.85rem;font-weight:600">Quiz reminder</div>
+              <div style="font-size:0.75rem;color:var(--txt-muted)">Your Biology quiz is due in 2 hours</div>
+            </div>
+          </div>
+          <div class="notif-item">
+            <span class="notif-dot unread" aria-hidden="true"></span>
+            <div>
+              <div style="font-size:0.85rem;font-weight:600">AI generated flashcards</div>
+              <div style="font-size:0.75rem;color:var(--txt-muted)">12 new cards ready for "Organic Chemistry"</div>
+            </div>
+          </div>
+          <div class="notif-item">
+            <span class="notif-dot" aria-hidden="true"></span>
+            <div>
+              <div style="font-size:0.85rem;font-weight:600">Study streak milestone</div>
+              <div style="font-size:0.75rem;color:var(--txt-muted)">You hit a 14-day streak! 🔥</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- PAGE CONTENT -->
+      <main class="page-content">
+
+        <!-- Welcome + Stats Row -->
+        <div class="stat-row">
+          <div class="stat-widget" style="color:var(--clr-primary)">
+            <div class="stat-widget-top">
+              <div class="stat-widget-icon icon-violet" aria-hidden="true">⏱️</div>
+            </div>
+            <div class="stat-widget-value">24.5h</div>
+            <div class="stat-widget-label">Study Time This Week</div>
+            <div class="stat-widget-change up">▲ 12% vs last week</div>
+          </div>
+
+          <div class="stat-widget" style="color:var(--clr-accent)">
+            <div class="stat-widget-top">
+              <div class="stat-widget-icon icon-teal" aria-hidden="true">🔥</div>
+            </div>
+            <div class="stat-widget-value">14</div>
+            <div class="stat-widget-label">Day Study Streak</div>
+            <div class="stat-widget-change up">▲ Personal best!</div>
+          </div>
+
+          <div class="stat-widget" style="color:var(--clr-warning)">
+            <div class="stat-widget-top">
+              <div class="stat-widget-icon icon-amber" aria-hidden="true">🧠</div>
+            </div>
+            <div class="stat-widget-value">128</div>
+            <div class="stat-widget-label">Topics Mastered</div>
+            <div class="stat-widget-change up">▲ 8 new this week</div>
+          </div>
+
+          <div class="stat-widget" style="color:var(--clr-success)">
+            <div class="stat-widget-top">
+              <div class="stat-widget-icon icon-green" aria-hidden="true">📈</div>
+            </div>
+            <div class="stat-widget-value">87%</div>
+            <div class="stat-widget-label">Avg Quiz Score</div>
+            <div class="stat-widget-change down">▼ 2% vs last week</div>
+          </div>
+        </div>
+
+        <!-- Main Grid -->
+        <div class="dash-grid">
+
+          <!-- AI Assistant Card -->
+          <div class="ai-card dash-col-2 reveal">
+            <div class="ai-card-icon" aria-hidden="true">🤖</div>
+            <h2 class="ai-card-title">Ask your AI Study Assistant</h2>
+            <p class="ai-card-desc">Get instant help with any topic, generate quizzes, or summarize your notes.</p>
+            <div class="ai-prompts">
+              <span class="ai-prompt-chip">Explain photosynthesis</span>
+              <span class="ai-prompt-chip">Summarize my Biology notes</span>
+              <span class="ai-prompt-chip">Create a quiz on World War 2</span>
+              <span class="ai-prompt-chip">Make flashcards for French verbs</span>
+            </div>
+          </div>
+
+          <!-- Study Progress (Donut) -->
+          <div class="card reveal delay-1">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Subject Breakdown</div>
+                <div class="card-subtitle">Time spent this month</div>
+              </div>
+            </div>
+            <div style="display:flex;align-items:center;gap:1.5rem;flex-wrap:wrap;justify-content:center">
+              <svg id="donut-chart" width="120" height="120" viewBox="0 0 120 120" role="img" aria-label="Subject time breakdown donut chart"></svg>
+              <div style="display:flex;flex-direction:column;gap:0.6rem">
+                <div class="chart-legend-item"><span class="chart-legend-dot" style="background:#6C63FF"></span> Math (40%)</div>
+                <div class="chart-legend-item"><span class="chart-legend-dot" style="background:#00D4AA"></span> Science (25%)</div>
+                <div class="chart-legend-item"><span class="chart-legend-dot" style="background:#FFB347"></span> History (20%)</div>
+                <div class="chart-legend-item"><span class="chart-legend-dot" style="background:#FF5E7D"></span> Language (15%)</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Study Activity Chart -->
+          <div class="card dash-col-2 reveal delay-2">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Weekly Study Activity</div>
+                <div class="card-subtitle">Hours studied vs performance score</div>
+              </div>
+            </div>
+            <div class="chart-legend">
+              <div class="chart-legend-item"><span class="chart-legend-dot" style="background:#6C63FF"></span> Study Hours</div>
+              <div class="chart-legend-item"><span class="chart-legend-dot" style="background:#00D4AA"></span> Performance</div>
+            </div>
+            <div class="chart-area">
+              <svg id="main-chart" width="100%" height="180" viewBox="0 0 600 180" preserveAspectRatio="none" role="img" aria-label="Weekly study activity line chart"></svg>
+            </div>
+          </div>
+
+          <!-- Recent Notes -->
+          <div class="card reveal delay-3">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Recent Notes</div>
+                <div class="card-subtitle">Last edited</div>
+              </div>
+              <a href="notes.html" class="btn btn-ghost btn-sm">View all</a>
+            </div>
+            <div class="note-list">
+              <div class="note-item" onclick="window.location.href='notes.html'">
+                <div class="note-item-icon icon-violet" aria-hidden="true">🧬</div>
+                <div>
+                  <div class="note-item-title">Cell Biology — Mitosis</div>
+                  <div class="note-item-meta">Edited 2 hours ago</div>
+                </div>
+              </div>
+              <div class="note-item" onclick="window.location.href='notes.html'">
+                <div class="note-item-icon icon-amber" aria-hidden="true">⚛️</div>
+                <div>
+                  <div class="note-item-title">Organic Chemistry Basics</div>
+                  <div class="note-item-meta">Edited yesterday</div>
+                </div>
+              </div>
+              <div class="note-item" onclick="window.location.href='notes.html'">
+                <div class="note-item-icon icon-sky" aria-hidden="true">🏛️</div>
+                <div>
+                  <div class="note-item-title">World War 2 Timeline</div>
+                  <div class="note-item-meta">Edited 3 days ago</div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Upcoming Tasks -->
+          <div class="card reveal delay-4">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Upcoming Tasks</div>
+                <div class="card-subtitle">Don't miss deadlines</div>
+              </div>
+            </div>
+            <div id="task-list">
+              <div class="task-item">
+                <button class="task-check" aria-label="Mark task complete"></button>
+                <span class="task-label">Finish Biology quiz</span>
+                <span class="task-due">Today</span>
+              </div>
+              <div class="task-item">
+                <button class="task-check done" aria-label="Mark task complete"></button>
+                <span class="task-label done">Review Chemistry flashcards</span>
+                <span class="task-due">Done</span>
+              </div>
+              <div class="task-item">
+                <button class="task-check" aria-label="Mark task complete"></button>
+                <span class="task-label">Read History Chapter 5</span>
+                <span class="task-due">Tomorrow</span>
+              </div>
+              <div class="task-item">
+                <button class="task-check" aria-label="Mark task complete"></button>
+                <span class="task-label">Submit Essay draft</span>
+                <span class="task-due">Fri</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Study Progress Circles -->
+          <div class="card reveal delay-5">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Goal Progress</div>
+                <div class="card-subtitle">Monthly targets</div>
+              </div>
+            </div>
+            <div style="display:flex;justify-content:space-around;flex-wrap:wrap;gap:1rem">
+              <div style="text-align:center">
+                <div class="progress-circle" id="prog-circle-1">
+                  <svg viewBox="0 0 90 90" width="90" height="90">
+                    <defs>
+                      <linearGradient id="gradStroke" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" stop-color="#6C63FF" />
+                        <stop offset="100%" stop-color="#00D4AA" />
+                      </linearGradient>
+                    </defs>
+                    <circle class="progress-circle-bg" cx="45" cy="45" r="36"></circle>
+                    <circle class="progress-circle-fill" cx="45" cy="45" r="36"></circle>
+                  </svg>
+                  <div class="progress-circle-label">
+                    <div class="progress-circle-pct">0%</div>
+                    <div class="progress-circle-sub">Quizzes</div>
+                  </div>
+                </div>
+              </div>
+              <div style="text-align:center">
+                <div class="progress-circle" id="prog-circle-2">
+                  <svg viewBox="0 0 90 90" width="90" height="90">
+                    <circle class="progress-circle-bg" cx="45" cy="45" r="36"></circle>
+                    <circle class="progress-circle-fill" cx="45" cy="45" r="36"></circle>
+                  </svg>
+                  <div class="progress-circle-label">
+                    <div class="progress-circle-pct">0%</div>
+                    <div class="progress-circle-sub">Notes</div>
+                  </div>
+                </div>
+              </div>
+              <div style="text-align:center">
+                <div class="progress-circle" id="prog-circle-3">
+                  <svg viewBox="0 0 90 90" width="90" height="90">
+                    <circle class="progress-circle-bg" cx="45" cy="45" r="36"></circle>
+                    <circle class="progress-circle-fill" cx="45" cy="45" r="36"></circle>
+                  </svg>
+                  <div class="progress-circle-label">
+                    <div class="progress-circle-pct">0%</div>
+                    <div class="progress-circle-sub">Flashcards</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Calendar Widget -->
+          <div class="card reveal delay-6" id="cal-widget">
+            <div class="cal-widget-header">
+              <span class="cal-month">Month Year</span>
+              <div class="cal-nav">
+                <button class="cal-nav-btn cal-prev" aria-label="Previous month">‹</button>
+                <button class="cal-nav-btn cal-next" aria-label="Next month">›</button>
+              </div>
+            </div>
+            <div class="cal-grid">
+              <div class="cal-day-label">S</div>
+              <div class="cal-day-label">M</div>
+              <div class="cal-day-label">T</div>
+              <div class="cal-day-label">W</div>
+              <div class="cal-day-label">T</div>
+              <div class="cal-day-label">F</div>
+              <div class="cal-day-label">S</div>
+            </div>
+            <div class="cal-grid cal-grid-body"></div>
+          </div>
+
+          <!-- Quick Actions -->
+          <div class="card dash-col-2 reveal delay-7">
+            <div class="card-header">
+              <div>
+                <div class="card-title">Quick Actions</div>
+                <div class="card-subtitle">Jump right into studying</div>
+              </div>
+            </div>
+            <div class="quick-actions">
+              <div class="quick-action-btn" data-page="chat.html">
+                <div class="quick-action-icon" aria-hidden="true">🤖</div>
+                Ask AI
+              </div>
+              <div class="quick-action-btn" data-page="notes.html">
+                <div class="quick-action-icon" aria-hidden="true">📝</div>
+                New Note
+              </div>
+              <div class="quick-action-btn" data-page="quiz.html">
+                <div class="quick-action-icon" aria-hidden="true">🧠</div>
+                New Quiz
+              </div>
+              <div class="quick-action-btn" data-page="flashcards.html">
+                <div class="quick-action-icon" aria-hidden="true">🃏</div>
+                Flashcards
+              </div>
+              <div class="quick-action-btn" data-page="calendar.html">
+                <div class="quick-action-icon" aria-hidden="true">📅</div>
+                Calendar
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- Floating Action Button -->
+  <button id="fab" aria-label="Quick start AI chat" title="Open AI Chat" onclick="window.location.href='chat.html'">
+    🤖
+  </button>
+  <script src="js/auth.js"></script>
+<script>
+  // Protect this page — redirect to login if not authenticated
+  if (!requireAuth()) { document.write(''); }
+  document.addEventListener('DOMContentLoaded', renderSidebarUser);
+</script>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+  <script src="js/dashboard.js"></script>
+</body>
+</html>

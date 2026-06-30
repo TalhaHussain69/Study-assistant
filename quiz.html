@@ -1,0 +1,389 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Quiz Generator — Create AI-powered quizzes from any topic or document." />
+  <title>Quiz Generator — StudyAI</title>
+
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/dashboard.css" />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>" />
+</head>
+<body>
+
+  <div id="cursor-dot" aria-hidden="true"></div>
+  <div id="cursor-ring" aria-hidden="true"></div>
+  <div id="scroll-progress" role="progressbar" aria-label="Page scroll progress"></div>
+  <div id="toast-container" aria-live="polite"></div>
+  <div class="sidebar-overlay" aria-hidden="true"></div>
+
+  <div class="app-layout">
+
+    <!-- SIDEBAR -->
+    <aside class="sidebar" aria-label="Main sidebar navigation">
+      <a href="index.html" class="sidebar-logo">
+        <div class="sidebar-logo-icon" aria-hidden="true">🎓</div>
+        <span class="text-gradient">StudyAI</span>
+      </a>
+
+      <nav class="sidebar-nav" aria-label="Dashboard navigation">
+        <p class="sidebar-section-label">Main</p>
+        <a href="dashboard.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">📊</span>
+          Dashboard
+        </a>
+        <a href="chat.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">🤖</span>
+          AI Chat
+          <span class="sidebar-badge">New</span>
+        </a>
+
+        <p class="sidebar-section-label">Study Tools</p>
+        <a href="notes.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">📝</span>
+          Notes
+        </a>
+        <a href="quiz.html" class="sidebar-link active">
+          <span class="sidebar-link-icon" aria-hidden="true">🧠</span>
+          Quiz Generator
+        </a>
+        <a href="flashcards.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">🃏</span>
+          Flashcards
+        </a>
+        <a href="calendar.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">📅</span>
+          Calendar
+        </a>
+
+        <p class="sidebar-section-label">Account</p>
+        <a href="profile.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">👤</span>
+          Profile
+        </a>
+        <a href="settings.html" class="sidebar-link">
+          <span class="sidebar-link-icon" aria-hidden="true">⚙️</span>
+          Settings
+        </a>
+      </nav>
+
+     <div class="sidebar-footer">
+  <a href="profile.html" class="sidebar-user">
+    <div class="avatar avatar-md" data-user-avatar style="background:var(--grad-primary)">SA</div>
+    <div class="sidebar-user-info">
+      <div class="sidebar-user-name" data-user-name>Loading…</div>
+      <div class="sidebar-user-role" data-user-plan>Free Plan</div>
+    </div>
+  </a>
+  <button class="btn btn-ghost btn-sm" data-logout style="width:100%;justify-content:center;margin-top:0.5rem;color:var(--clr-danger)">
+    🚪 Log Out
+  </button>
+</div>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="main">
+
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <div class="topbar-left">
+          <button class="hamburger" aria-label="Toggle sidebar">
+            <span></span><span></span><span></span>
+          </button>
+          <h1 class="topbar-title">Quiz Generator</h1>
+        </div>
+
+        <div class="topbar-right">
+          <button class="topbar-icon-btn" data-theme-toggle aria-label="Toggle theme" title="Toggle theme">
+            <span data-theme-icon aria-hidden="true">☀️</span>
+          </button>
+          <button class="topbar-icon-btn" id="notif-btn" aria-label="Notifications" title="Notifications">
+            🔔
+            <span class="notif-count">3</span>
+          </button>
+        </div>
+
+        <div class="notif-panel" id="notif-panel" role="region" aria-label="Notifications">
+          <div class="notif-header">
+            <strong style="font-size:0.9rem">Notifications</strong>
+          </div>
+          <div class="notif-item">
+            <span class="notif-dot unread" aria-hidden="true"></span>
+            <div>
+              <div style="font-size:0.85rem;font-weight:600">Quiz reminder</div>
+              <div style="font-size:0.75rem;color:var(--txt-muted)">Your Biology quiz is due in 2 hours</div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- PAGE CONTENT -->
+      <main class="page-content">
+
+        <!-- Generator Form (shown first) -->
+        <div class="card reveal" id="quiz-generator-view" style="max-width:720px;margin:0 auto;width:100%">
+          <div class="card-header">
+            <div>
+              <div class="card-title">🧠 Generate a New Quiz</div>
+              <div class="card-subtitle">Paste text, type a topic, or upload a file</div>
+            </div>
+          </div>
+
+          <div style="display:flex;flex-direction:column;gap:1.25rem">
+            <div>
+              <label for="quiz-topic" style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:0.5rem">Topic or paste content</label>
+              <textarea id="quiz-topic" class="input" rows="5" style="resize:vertical" placeholder="e.g. The French Revolution, or paste your notes here…">Photosynthesis is the process by which green plants, algae, and some bacteria convert light energy into chemical energy stored in glucose.</textarea>
+            </div>
+
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem">
+              <div>
+                <label for="quiz-count" style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:0.5rem">Number of questions</label>
+                <select id="quiz-count" class="input">
+                  <option>5 Questions</option>
+                  <option selected>10 Questions</option>
+                  <option>15 Questions</option>
+                  <option>20 Questions</option>
+                </select>
+              </div>
+              <div>
+                <label for="quiz-difficulty" style="font-size:0.8rem;font-weight:600;display:block;margin-bottom:0.5rem">Difficulty</label>
+                <select id="quiz-difficulty" class="input">
+                  <option>Easy</option>
+                  <option selected>Medium</option>
+                  <option>Hard</option>
+                  <option>Mixed</option>
+                </select>
+              </div>
+            </div>
+
+            <div style="display:flex;gap:0.75rem;flex-wrap:wrap">
+              <button class="chat-toolbar-btn" type="button">📎 Upload File</button>
+              <button class="chat-toolbar-btn" type="button">📄 Upload PDF</button>
+            </div>
+
+            <button class="btn btn-primary btn-lg" id="generate-quiz-btn" style="width:100%;justify-content:center">
+              ✨ Generate Quiz
+            </button>
+          </div>
+        </div>
+
+        <!-- Quiz Taking View (hidden initially) -->
+        <div class="card reveal" id="quiz-taking-view" style="max-width:720px;margin:0 auto;width:100%;display:none">
+
+          <div class="quiz-progress">
+            <span class="quiz-step">Question <span id="q-current">1</span> of <span id="q-total">5</span></span>
+            <div class="progress-track" style="flex:1">
+              <div class="progress-fill" id="quiz-progress-fill" style="width:20%"></div>
+            </div>
+            <span class="badge badge-primary" id="quiz-score-badge">Score: 0/0</span>
+          </div>
+
+          <h2 class="quiz-question" id="quiz-question-text">
+            What is the primary pigment responsible for capturing light energy in photosynthesis?
+          </h2>
+
+          <div class="quiz-options" id="quiz-options">
+            <div class="quiz-option" data-correct="false">
+              <span class="quiz-option-letter">A</span>
+              Carotenoid
+            </div>
+            <div class="quiz-option" data-correct="true">
+              <span class="quiz-option-letter">B</span>
+              Chlorophyll
+            </div>
+            <div class="quiz-option" data-correct="false">
+              <span class="quiz-option-letter">C</span>
+              Melanin
+            </div>
+            <div class="quiz-option" data-correct="false">
+              <span class="quiz-option-letter">D</span>
+              Hemoglobin
+            </div>
+          </div>
+
+          <div style="display:flex;justify-content:space-between;margin-top:2rem;gap:1rem">
+            <button class="btn btn-outline" id="quiz-prev-btn">← Previous</button>
+            <button class="btn btn-primary" id="quiz-next-btn">Next Question →</button>
+          </div>
+        </div>
+
+        <!-- Quiz Results View (hidden initially) -->
+        <div class="card reveal" id="quiz-results-view" style="max-width:600px;margin:0 auto;width:100%;display:none;text-align:center;padding:3rem 2rem">
+          <div style="font-size:4rem;margin-bottom:1rem">🎉</div>
+          <h2 class="font-display" style="font-size:2rem;font-weight:900;margin-bottom:0.5rem">Quiz Complete!</h2>
+          <p style="color:var(--txt-secondary);margin-bottom:2rem">Great job! Here's how you did:</p>
+
+          <div class="progress-circle" style="width:140px;height:140px;margin:0 auto 2rem">
+            <svg viewBox="0 0 90 90" width="140" height="140">
+              <circle class="progress-circle-bg" cx="45" cy="45" r="36"></circle>
+              <circle class="progress-circle-fill" id="result-circle" cx="45" cy="45" r="36"></circle>
+            </svg>
+            <div class="progress-circle-label">
+              <div class="progress-circle-pct" id="result-pct" style="font-size:1.8rem">80%</div>
+              <div class="progress-circle-sub">Score</div>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
+            <button class="btn btn-outline" id="retry-quiz-btn">🔄 Retry Quiz</button>
+            <button class="btn btn-primary" id="new-quiz-btn">✨ New Quiz</button>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <button id="fab" aria-label="Quick start AI chat" title="Open AI Chat" onclick="window.location.href='chat.html'">
+    🤖
+  </button>
+
+ <script src="js/auth.js"></script>
+<script>
+  if (!requireAuth()) { document.write(''); }
+  document.addEventListener('DOMContentLoaded', renderSidebarUser);
+</script>
+<script src="js/main.js"></script>
+<script>
+  // Simple demo quiz flow
+  const QUIZ_QUESTIONS = [
+    { q: "What is the primary pigment responsible for capturing light energy in photosynthesis?", options: ["Carotenoid", "Chlorophyll", "Melanin", "Hemoglobin"], correct: 1 },
+    { q: "Where does photosynthesis primarily take place in a plant cell?", options: ["Mitochondria", "Nucleus", "Chloroplast", "Ribosome"], correct: 2 },
+    { q: "What gas is released as a byproduct of photosynthesis?", options: ["Carbon Dioxide", "Nitrogen", "Oxygen", "Methane"], correct: 2 },
+    { q: "Which of these is a reactant in photosynthesis?", options: ["Glucose", "Oxygen", "Water", "ATP"], correct: 2 },
+    { q: "What is the overall purpose of the Calvin Cycle?", options: ["Produce light energy", "Fix carbon into glucose", "Release oxygen", "Break down water"], correct: 1 }
+  ];
+
+  let currentQ = 0;
+  let score = 0;
+  let answered = [];
+  let quizTopic = 'Photosynthesis';
+
+  const genBtn   = document.getElementById('generate-quiz-btn');
+  const genView  = document.getElementById('quiz-generator-view');
+  const takeView = document.getElementById('quiz-taking-view');
+  const resView  = document.getElementById('quiz-results-view');
+
+  genBtn.addEventListener('click', () => {
+    quizTopic = document.getElementById('quiz-topic').value.slice(0, 40) || 'Custom Quiz';
+    genBtn.disabled = true;
+    genBtn.innerHTML = '<span class="loading-dots"><span></span><span></span><span></span></span> Generating…';
+    setTimeout(() => {
+      genView.style.display = 'none';
+      takeView.style.display = 'block';
+      currentQ = 0; score = 0; answered = [];
+      renderQuestion();
+      toast('✨ Quiz generated successfully!', 'success');
+      genBtn.disabled = false;
+      genBtn.innerHTML = '✨ Generate Quiz';
+    }, 1800);
+  });
+
+  function renderQuestion() {
+    const data = QUIZ_QUESTIONS[currentQ];
+    document.getElementById('quiz-question-text').textContent = data.q;
+    document.getElementById('q-current').textContent = currentQ + 1;
+    document.getElementById('q-total').textContent = QUIZ_QUESTIONS.length;
+    document.getElementById('quiz-progress-fill').style.width = `${((currentQ + 1) / QUIZ_QUESTIONS.length) * 100}%`;
+    document.getElementById('quiz-score-badge').textContent = `Score: ${score}/${answered.length}`;
+
+    const optsContainer = document.getElementById('quiz-options');
+    optsContainer.innerHTML = '';
+    const letters = ['A', 'B', 'C', 'D'];
+
+    data.options.forEach((opt, i) => {
+      const el = document.createElement('div');
+      el.className = 'quiz-option';
+      el.dataset.index = i;
+      el.innerHTML = `<span class="quiz-option-letter">${letters[i]}</span> ${opt}`;
+      el.addEventListener('click', () => selectOption(el, i, data.correct));
+      optsContainer.appendChild(el);
+    });
+
+    document.getElementById('quiz-prev-btn').disabled = currentQ === 0;
+    document.getElementById('quiz-next-btn').textContent = currentQ === QUIZ_QUESTIONS.length - 1 ? 'Finish Quiz ✓' : 'Next Question →';
+  }
+
+  function selectOption(el, index, correctIndex) {
+    if (answered[currentQ] !== undefined) return;
+    document.querySelectorAll('.quiz-option').forEach(o => o.classList.remove('selected'));
+    el.classList.add('selected');
+
+    setTimeout(() => {
+      document.querySelectorAll('.quiz-option').forEach((o, i) => {
+        if (i === correctIndex) o.classList.add('correct');
+        else if (i === index) o.classList.add('wrong');
+      });
+      answered[currentQ] = index;
+      if (index === correctIndex) score++;
+      document.getElementById('quiz-score-badge').textContent = `Score: ${score}/${answered.length}`;
+    }, 300);
+  }
+
+  document.getElementById('quiz-next-btn').addEventListener('click', () => {
+    if (currentQ < QUIZ_QUESTIONS.length - 1) {
+      currentQ++;
+      renderQuestion();
+    } else {
+      showResults();
+    }
+  });
+
+  document.getElementById('quiz-prev-btn').addEventListener('click', () => {
+    if (currentQ > 0) { currentQ--; renderQuestion(); }
+  });
+
+  function showResults() {
+    takeView.style.display = 'none';
+    resView.style.display = 'block';
+    const pct = Math.round((score / QUIZ_QUESTIONS.length) * 100);
+    document.getElementById('result-pct').textContent = pct + '%';
+    const circle = document.getElementById('result-circle');
+    const r = 36, circ = 2 * Math.PI * r;
+    circle.style.strokeDasharray = circ;
+    circle.style.strokeDashoffset = circ * (1 - pct / 100);
+    circle.style.stroke = 'url(#gradStroke2)';
+    toast(`🎉 Quiz complete! You scored ${pct}%`, 'success', 4000);
+
+    // ── Save quiz score to user's account ──
+    const data = getUserData() || {};
+    data.quizScores = data.quizScores || [];
+    data.quizScores.push({
+      topic: quizTopic,
+      score: pct,
+      correct: score,
+      total: QUIZ_QUESTIONS.length,
+      date: new Date().toISOString(),
+    });
+    // keep last 30 quiz attempts
+    if (data.quizScores.length > 30) data.quizScores = data.quizScores.slice(-30);
+    saveUserData(data);
+  }
+
+  document.getElementById('retry-quiz-btn').addEventListener('click', () => {
+    resView.style.display = 'none';
+    takeView.style.display = 'block';
+    currentQ = 0; score = 0; answered = [];
+    renderQuestion();
+  });
+
+  document.getElementById('new-quiz-btn').addEventListener('click', () => {
+    resView.style.display = 'none';
+    genView.style.display = 'block';
+  });
+
+  document.querySelector('#quiz-results-view svg').insertAdjacentHTML('afterbegin', `
+    <defs>
+      <linearGradient id="gradStroke2" x1="0%" y1="0%" x2="100%" y2="100%">
+        <stop offset="0%" stop-color="#6C63FF" />
+        <stop offset="100%" stop-color="#00D4AA" />
+      </linearGradient>
+    </defs>
+  `);
+</script>
+</body>
+</html>

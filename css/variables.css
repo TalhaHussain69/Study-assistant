@@ -1,0 +1,163 @@
+/* ============================================================
+   STUDY ASSISTANT — CSS VARIABLES (Design Tokens)
+   ============================================================ */
+
+:root {
+  /* ── Brand Palette ───────────────────────────────────────── */
+  --clr-primary:        #6C63FF;   /* electric violet */
+  --clr-primary-light:  #9B95FF;
+  --clr-primary-dark:   #4A42D4;
+  --clr-accent:         #00D4AA;   /* neon teal */
+  --clr-accent-light:   #33DDBB;
+  --clr-warning:        #FFB347;
+  --clr-danger:         #FF5E7D;
+  --clr-success:        #4CAF82;
+  --clr-info:           #47B8FF;
+
+  /* ── Gradient Tokens ─────────────────────────────────────── */
+  --grad-hero:   linear-gradient(135deg, #0d0d1a 0%, #13132b 50%, #0a1628 100%);
+  --grad-card:   linear-gradient(135deg, rgba(108,99,255,.15) 0%, rgba(0,212,170,.08) 100%);
+  --grad-primary:linear-gradient(135deg, #6C63FF, #00D4AA);
+  --grad-warm:   linear-gradient(135deg, #FF5E7D, #FFB347);
+  --grad-glow:   radial-gradient(ellipse at 50% 0%, rgba(108,99,255,.35) 0%, transparent 65%);
+  --grad-sidebar:linear-gradient(180deg, rgba(18,18,40,.97) 0%, rgba(12,12,30,.97) 100%);
+
+  /* ── Dark Mode Surfaces ──────────────────────────────────── */
+  --bg-base:         #0d0d1a;
+  --bg-surface:      #13132b;
+  --bg-elevated:     #1a1a35;
+  --bg-glass:        rgba(255,255,255,.04);
+  --bg-glass-hover:  rgba(255,255,255,.08);
+  --bg-input:        rgba(255,255,255,.06);
+  --bg-sidebar:      rgba(12,12,28,.95);
+  --bg-overlay:      rgba(0,0,0,.6);
+
+  /* ── Text ────────────────────────────────────────────────── */
+  --txt-primary:   #F0F0FF;
+  --txt-secondary: #A8A8C8;
+  --txt-muted:     #6A6A88;
+  --txt-inverse:   #0d0d1a;
+
+  /* ── Borders & Dividers ──────────────────────────────────── */
+  --border-subtle: rgba(255,255,255,.07);
+  --border-glass:  rgba(255,255,255,.12);
+  --border-accent: rgba(108,99,255,.4);
+  --border-glow:   rgba(108,99,255,.6);
+
+  /* ── Shadows ─────────────────────────────────────────────── */
+  --shadow-sm:   0 2px 8px rgba(0,0,0,.3);
+  --shadow-md:   0 8px 24px rgba(0,0,0,.4);
+  --shadow-lg:   0 16px 48px rgba(0,0,0,.5);
+  --shadow-glow: 0 0 32px rgba(108,99,255,.35);
+  --shadow-card: 0 4px 20px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.06);
+
+  /* ── Glass Morphism ──────────────────────────────────────── */
+  --glass-blur:     blur(20px);
+  --glass-border:   1px solid rgba(255,255,255,.1);
+  --glass-bg:       rgba(255,255,255,.04);
+  --glass-bg-dark:  rgba(10,10,25,.6);
+
+  /* ── Typography ──────────────────────────────────────────── */
+  --font-display: 'Syne', sans-serif;      /* futuristic display */
+  --font-body:    'Inter', sans-serif;     /* clean body */
+  --font-mono:    'JetBrains Mono', monospace;
+
+  --fs-xs:  0.75rem;   /* 12px */
+  --fs-sm:  0.875rem;  /* 14px */
+  --fs-md:  1rem;      /* 16px */
+  --fs-lg:  1.125rem;  /* 18px */
+  --fs-xl:  1.25rem;   /* 20px */
+  --fs-2xl: 1.5rem;    /* 24px */
+  --fs-3xl: 1.875rem;  /* 30px */
+  --fs-4xl: 2.25rem;   /* 36px */
+  --fs-5xl: 3rem;      /* 48px */
+  --fs-6xl: 3.75rem;   /* 60px */
+  --fs-7xl: 4.5rem;    /* 72px */
+
+  --fw-normal:   400;
+  --fw-medium:   500;
+  --fw-semibold: 600;
+  --fw-bold:     700;
+  --fw-extrabold:800;
+  --fw-black:    900;
+
+  --lh-tight:  1.1;
+  --lh-snug:   1.3;
+  --lh-normal: 1.6;
+  --lh-relaxed:1.8;
+
+  --ls-tight:  -.03em;
+  --ls-normal: -.01em;
+  --ls-wide:   .04em;
+  --ls-wider:  .1em;
+
+  /* ── Spacing ─────────────────────────────────────────────── */
+  --sp-1:  0.25rem;   /* 4px  */
+  --sp-2:  0.5rem;    /* 8px  */
+  --sp-3:  0.75rem;   /* 12px */
+  --sp-4:  1rem;      /* 16px */
+  --sp-5:  1.25rem;   /* 20px */
+  --sp-6:  1.5rem;    /* 24px */
+  --sp-8:  2rem;      /* 32px */
+  --sp-10: 2.5rem;    /* 40px */
+  --sp-12: 3rem;      /* 48px */
+  --sp-16: 4rem;      /* 64px */
+  --sp-20: 5rem;      /* 80px */
+  --sp-24: 6rem;      /* 96px */
+
+  /* ── Border Radius ───────────────────────────────────────── */
+  --r-sm:   6px;
+  --r-md:   12px;
+  --r-lg:   16px;
+  --r-xl:   20px;
+  --r-2xl:  24px;
+  --r-3xl:  32px;
+  --r-full: 9999px;
+
+  /* ── Transitions ─────────────────────────────────────────── */
+  --ease-fast:   all .15s cubic-bezier(.4,0,.2,1);
+  --ease-normal: all .25s cubic-bezier(.4,0,.2,1);
+  --ease-slow:   all .4s  cubic-bezier(.4,0,.2,1);
+  --ease-bounce: all .3s  cubic-bezier(.34,1.56,.64,1);
+
+  /* ── Layout ──────────────────────────────────────────────── */
+  --sidebar-w:     260px;
+  --topbar-h:      70px;
+  --container-max: 1280px;
+  --z-dropdown:    100;
+  --z-sidebar:     200;
+  --z-modal:       300;
+  --z-toast:       400;
+  --z-cursor:      9999;
+}
+
+/* ── Light Mode Overrides ────────────────────────────────── */
+[data-theme="light"] {
+  --bg-base:         #f4f4fb;
+  --bg-surface:      #ffffff;
+  --bg-elevated:     #eeeef8;
+  --bg-glass:        rgba(255,255,255,.7);
+  --bg-glass-hover:  rgba(255,255,255,.9);
+  --bg-input:        rgba(0,0,0,.04);
+  --bg-sidebar:      rgba(255,255,255,.95);
+  --bg-overlay:      rgba(0,0,20,.45);
+
+  --txt-primary:   #0f0f2a;
+  --txt-secondary: #4a4a6a;
+  --txt-muted:     #9090b0;
+
+  --border-subtle: rgba(0,0,0,.08);
+  --border-glass:  rgba(0,0,0,.1);
+  --border-accent: rgba(108,99,255,.35);
+
+  --shadow-sm:   0 2px 8px rgba(108,99,255,.08);
+  --shadow-md:   0 8px 24px rgba(108,99,255,.12);
+  --shadow-lg:   0 16px 48px rgba(108,99,255,.16);
+  --shadow-card: 0 4px 20px rgba(108,99,255,.1), inset 0 1px 0 rgba(255,255,255,.8);
+
+  --glass-bg:      rgba(255,255,255,.65);
+  --glass-bg-dark: rgba(240,240,255,.8);
+
+  --grad-hero:    linear-gradient(135deg, #f0f0ff 0%, #e8e8ff 50%, #f0f4ff 100%);
+  --grad-sidebar: linear-gradient(180deg, rgba(255,255,255,.97) 0%, rgba(248,248,255,.97) 100%);
+}

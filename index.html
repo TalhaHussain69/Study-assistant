@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="StudyAI — Your AI-powered Study Assistant. Learn smarter, not harder." />
+  <title>StudyAI — AI-Powered Study Assistant</title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/landing.css" />
+
+  <!-- Favicon emoji -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>" />
+</head>
+<body>
+
+  <!-- Custom Cursor -->
+  <div id="cursor-dot"  aria-hidden="true"></div>
+  <div id="cursor-ring" aria-hidden="true"></div>
+
+  <!-- Scroll Progress -->
+  <div id="scroll-progress" role="progressbar" aria-label="Page scroll progress"></div>
+
+  <!-- Toast Container -->
+  <div id="toast-container" aria-live="polite"></div>
+
+  <!-- ══════════════════════════════════════
+       NAVBAR
+  ══════════════════════════════════════ -->
+  <header class="navbar" role="banner">
+    <div class="container">
+      <nav class="nav-inner" aria-label="Main navigation">
+
+        <!-- Logo -->
+        <a href="index.html" class="nav-logo" aria-label="StudyAI Home">
+          <div class="nav-logo-icon" aria-hidden="true">🎓</div>
+          <span class="text-gradient">StudyAI</span>
+        </a>
+
+        <!-- Desktop Links -->
+        <ul class="nav-links" role="list">
+          <li><a href="#features"     class="nav-link">Features</a></li>
+          <li><a href="#stats"        class="nav-link">Stats</a></li>
+          <li><a href="#testimonials" class="nav-link">Testimonials</a></li>
+          <li><a href="#pricing"      class="nav-link">Pricing</a></li>
+          <li><a href="#faq"          class="nav-link">FAQ</a></li>
+        </ul>
+
+        <!-- Actions -->
+        <div class="nav-actions">
+          <!-- Theme Toggle -->
+          <button
+            class="btn btn-ghost btn-icon"
+            data-theme-toggle
+            aria-label="Toggle dark/light mode"
+            title="Toggle theme"
+          >
+            <span data-theme-icon aria-hidden="true">☀️</span>
+          </button>
+
+          <a href="dashboard.html" class="btn btn-outline hide-mobile">Log in</a>
+          <a href="dashboard.html" class="btn btn-primary">Get Started Free</a>
+
+          <!-- Hamburger (mobile) -->
+          <button
+            class="nav-menu-btn"
+            id="mobile-menu-btn"
+            aria-expanded="false"
+            aria-controls="mobile-nav"
+            aria-label="Open menu"
+          >
+            <span></span><span></span><span></span>
+          </button>
+        </div>
+      </nav>
+    </div>
+  </header>
+
+  <!-- Mobile Nav -->
+  <nav class="mobile-nav" id="mobile-nav" aria-label="Mobile navigation">
+    <a href="#features"     class="mobile-nav-link">Features</a>
+    <a href="#stats"        class="mobile-nav-link">Stats</a>
+    <a href="#testimonials" class="mobile-nav-link">Testimonials</a>
+    <a href="#pricing"      class="mobile-nav-link">Pricing</a>
+    <a href="#faq"          class="mobile-nav-link">FAQ</a>
+    <a href="dashboard.html" class="btn btn-primary btn-lg" style="margin-top:1rem;text-align:center">Get Started Free</a>
+  </nav>
+
+
+  <!-- ══════════════════════════════════════
+       HERO SECTION
+  ══════════════════════════════════════ -->
+  <main>
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="hero-bg"></div>
+    <div class="hero-glow" aria-hidden="true"></div>
+    <div class="hero-grid" aria-hidden="true"></div>
+
+    <div class="container">
+      <div class="hero-inner">
+
+        <!-- Left: Text -->
+        <div class="hero-text anim-fade-in-up">
+          <div class="hero-eyebrow">
+            <span class="hero-eyebrow-dot" aria-hidden="true"></span>
+            Now with GPT-4 Intelligence
+          </div>
+
+          <h1 class="hero-title" id="hero-title">
+            Study Smarter<br />
+            with Your<br />
+            <span class="text-gradient">AI Companion</span>
+          </h1>
+
+          <p class="hero-desc">
+            Transform the way you learn. Get instant explanations,
+            auto-generate quizzes, create flashcards, and track your
+            progress — all powered by advanced AI.
+          </p>
+
+          <div class="hero-actions">
+            <a href="dashboard.html" class="btn btn-primary btn-lg">
+              🚀 Start Learning Free
+            </a>
+            <a href="#features" class="btn btn-outline btn-lg">
+              ✨ See Features
+            </a>
+          </div>
+
+          <!-- Social Proof -->
+          <div class="hero-social-proof">
+            <div class="hero-avatars" aria-label="User avatars">
+              <div class="avatar" style="background:linear-gradient(135deg,#f093fb,#f5576c);font-size:13px">A</div>
+              <div class="avatar" style="background:linear-gradient(135deg,#4facfe,#00f2fe);font-size:13px">B</div>
+              <div class="avatar" style="background:linear-gradient(135deg,#43e97b,#38f9d7);font-size:13px">C</div>
+              <div class="avatar" style="background:linear-gradient(135deg,#fa709a,#fee140);font-size:13px">D</div>
+              <div class="avatar" style="background:linear-gradient(135deg,#a18cd1,#fbc2eb);font-size:13px">+</div>
+            </div>
+            <p class="hero-proof-text">
+              Trusted by <strong>50,000+</strong> students worldwide ⭐ 4.9/5
+            </p>
+          </div>
+        </div>
+
+        <!-- Right: Illustration -->
+        <div class="hero-visual" aria-hidden="true">
+          <!-- Background orbs -->
+          <div class="hero-orb hero-orb-1"></div>
+          <div class="hero-orb hero-orb-2"></div>
+
+          <!-- Main Card -->
+          <div class="hero-card-main">
+            <!-- Orbit Animation -->
+            <div class="orbit-container">
+              <div class="orbit-ring-1">
+                <div class="orbit-planet">📚</div>
+              </div>
+              <div class="orbit-ring-2">
+                <div class="orbit-planet">💡</div>
+              </div>
+              <div class="orbit-center">🤖</div>
+            </div>
+
+            <!-- AI Status -->
+            <div class="ai-thinking">
+              <div class="loading-dots" aria-label="AI is thinking">
+                <span></span><span></span><span></span>
+              </div>
+              <span style="font-size:0.75rem">AI is generating your quiz…</span>
+            </div>
+          </div>
+
+          <!-- Floating Cards -->
+          <div class="hero-card-floating hero-card-floating-1">
+            <div style="font-size:11px;color:var(--txt-muted);margin-bottom:4px">⚡ Study Streak</div>
+            <div style="font-size:1.4rem;font-weight:900;font-family:var(--font-display)" class="text-gradient">14 Days 🔥</div>
+          </div>
+
+          <div class="hero-card-floating hero-card-floating-2">
+            <div style="font-size:11px;color:var(--txt-muted);margin-bottom:4px">📊 Score Improved</div>
+            <div style="font-size:1.4rem;font-weight:900;font-family:var(--font-display);color:var(--clr-success)">+42%</div>
+          </div>
+
+          <div class="hero-card-floating hero-card-floating-3">
+            <div style="font-size:11px;color:var(--txt-muted);margin-bottom:4px">🧠 Topics Mastered</div>
+            <div style="font-size:1.4rem;font-weight:900;font-family:var(--font-display)" class="text-gradient">128</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       TRUSTED BY
+  ══════════════════════════════════════ -->
+  <section class="trusted" aria-labelledby="trusted-label">
+    <div class="container">
+      <p class="trusted-label" id="trusted-label">Trusted by students from top universities</p>
+      <div class="trusted-logos" role="list">
+        <span class="trusted-logo" role="listitem">MIT</span>
+        <span class="trusted-logo" role="listitem">Stanford</span>
+        <span class="trusted-logo" role="listitem">Harvard</span>
+        <span class="trusted-logo" role="listitem">Oxford</span>
+        <span class="trusted-logo" role="listitem">Cambridge</span>
+        <span class="trusted-logo" role="listitem">Caltech</span>
+        <span class="trusted-logo" role="listitem">IIT Delhi</span>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       FEATURES
+  ══════════════════════════════════════ -->
+  <section class="section" id="features" aria-labelledby="features-title">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow reveal">✨ Everything You Need</div>
+        <h2 class="section-title reveal delay-1" id="features-title">
+          One Platform.<br /><span class="text-gradient">Infinite Possibilities.</span>
+        </h2>
+        <p class="section-desc reveal delay-2">
+          Stop juggling multiple apps. StudyAI brings together AI chat,
+          smart notes, quizzes, flashcards, and calendar — all in one place.
+        </p>
+      </div>
+
+      <div class="features-grid">
+
+        <!-- Feature 1 -->
+        <article class="feature-card reveal hover-glow" style="transition-delay:.05s">
+          <div class="feature-icon icon-violet">🤖</div>
+          <h3 class="feature-title">AI Chat Assistant</h3>
+          <p class="feature-desc">
+            Ask anything. Get instant, detailed explanations in plain language.
+            Supports PDF upload and voice input.
+          </p>
+        </article>
+
+        <!-- Feature 2 -->
+        <article class="feature-card reveal hover-glow" style="transition-delay:.1s">
+          <div class="feature-icon icon-teal">📝</div>
+          <h3 class="feature-title">Smart Notes</h3>
+          <p class="feature-desc">
+            Rich text editor with AI-powered summarization, tagging, and
+            intelligent organization across subjects.
+          </p>
+        </article>
+
+        <!-- Feature 3 -->
+        <article class="feature-card reveal hover-glow" style="transition-delay:.15s">
+          <div class="feature-icon icon-pink">🧠</div>
+          <h3 class="feature-title">Quiz Generator</h3>
+          <p class="feature-desc">
+            Paste any text or upload a PDF — AI generates MCQ, true/false,
+            and short-answer quizzes instantly.
+          </p>
+        </article>
+
+        <!-- Feature 4 -->
+        <article class="feature-card reveal hover-glow" style="transition-delay:.2s">
+          <div class="feature-icon icon-amber">🃏</div>
+          <h3 class="feature-title">Flashcards</h3>
+          <p class="feature-desc">
+            Spaced-repetition flashcards with flip animations. Rate cards
+            by difficulty for optimized review sessions.
+          </p>
+        </article>
+
+        <!-- Feature 5 -->
+        <article class="feature-card reveal hover-glow" style="transition-delay:.25s">
+          <div class="feature-icon icon-sky">📅</div>
+          <h3 class="feature-title">Study Calendar</h3>
+          <p class="feature-desc">
+            Plan your study sessions, set deadlines, and get AI-suggested
+            study schedules based on your goals.
+          </p>
+        </article>
+
+        <!-- Feature 6 -->
+        <article class="feature-card reveal hover-glow" style="transition-delay:.3s">
+          <div class="feature-icon icon-green">📈</div>
+          <h3 class="feature-title">Progress Analytics</h3>
+          <p class="feature-desc">
+            Visual charts and insights into your study habits, quiz scores,
+            and mastery level across all subjects.
+          </p>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       STATS
+  ══════════════════════════════════════ -->
+  <section class="section stats" id="stats" aria-labelledby="stats-title">
+    <div class="stats-bg-glow" aria-hidden="true"></div>
+    <div class="container" style="position:relative">
+      <div class="section-header" style="margin-bottom:3rem">
+        <div class="section-eyebrow reveal">📊 Real Impact</div>
+        <h2 class="section-title reveal delay-1" id="stats-title">
+          Numbers That<br /><span class="text-gradient">Speak For Themselves</span>
+        </h2>
+      </div>
+
+      <div class="stats-grid">
+        <div class="stat-card reveal">
+          <div class="stat-number" data-count="50" data-suffix="K+">0</div>
+          <div class="stat-label">Active Students</div>
+        </div>
+        <div class="stat-card reveal delay-1">
+          <div class="stat-number" data-count="2.4" data-suffix="M+" data-decimals="1">0</div>
+          <div class="stat-label">Quizzes Generated</div>
+        </div>
+        <div class="stat-card reveal delay-2">
+          <div class="stat-number" data-count="42" data-suffix="%">0</div>
+          <div class="stat-label">Average Score Improvement</div>
+        </div>
+        <div class="stat-card reveal delay-3">
+          <div class="stat-number" data-count="4.9" data-suffix="★" data-decimals="1">0</div>
+          <div class="stat-label">User Rating</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       TESTIMONIALS
+  ══════════════════════════════════════ -->
+  <section class="section" id="testimonials" aria-labelledby="test-title">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow reveal">💬 Student Stories</div>
+        <h2 class="section-title reveal delay-1" id="test-title">
+          Loved by <span class="text-gradient">Students Worldwide</span>
+        </h2>
+        <p class="section-desc reveal delay-2">
+          Real students, real results. See how StudyAI has transformed the way people learn.
+        </p>
+      </div>
+
+      <div class="testimonials-grid">
+
+        <article class="testimonial-card reveal">
+          <div class="testimonial-stars" aria-label="5 out of 5 stars">⭐⭐⭐⭐⭐</div>
+          <p class="testimonial-quote">
+            "StudyAI completely changed how I prepare for exams. The quiz generator
+            alone saved me hours every week. My GPA went from 3.1 to 3.8 in one semester!"
+          </p>
+          <div class="testimonial-author">
+            <div class="avatar avatar-md" style="background:linear-gradient(135deg,#f093fb,#f5576c)">A</div>
+            <div>
+              <div class="testimonial-name">Ayesha Rahman</div>
+              <div class="testimonial-role">Computer Science, MIT</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="testimonial-card reveal delay-1">
+          <div class="testimonial-stars" aria-label="5 out of 5 stars">⭐⭐⭐⭐⭐</div>
+          <p class="testimonial-quote">
+            "I used to struggle with complex topics in physics. The AI explains
+            things in simple terms and the flashcards help me retain everything.
+            Absolutely worth it!"
+          </p>
+          <div class="testimonial-author">
+            <div class="avatar avatar-md" style="background:linear-gradient(135deg,#4facfe,#00f2fe)">J</div>
+            <div>
+              <div class="testimonial-name">James Okafor</div>
+              <div class="testimonial-role">Physics, Oxford</div>
+            </div>
+          </div>
+        </article>
+
+        <article class="testimonial-card reveal delay-2">
+          <div class="testimonial-stars" aria-label="5 out of 5 stars">⭐⭐⭐⭐⭐</div>
+          <p class="testimonial-quote">
+            "The AI calendar feature is incredible. It plans my study schedule
+            based on my exams. I never miss a deadline and feel so much less
+            stressed about studying."
+          </p>
+          <div class="testimonial-author">
+            <div class="avatar avatar-md" style="background:linear-gradient(135deg,#43e97b,#38f9d7)">S</div>
+            <div>
+              <div class="testimonial-name">Sara Kim</div>
+              <div class="testimonial-role">Pre-Med, Stanford</div>
+            </div>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       PRICING
+  ══════════════════════════════════════ -->
+  <section class="section" id="pricing" aria-labelledby="pricing-title">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow reveal">💳 Simple Pricing</div>
+        <h2 class="section-title reveal delay-1" id="pricing-title">
+          Start Free.<br /><span class="text-gradient">Upgrade Anytime.</span>
+        </h2>
+        <p class="section-desc reveal delay-2">
+          No credit card required. Cancel anytime. 7-day free trial on Pro.
+        </p>
+
+        <!-- Billing Toggle -->
+        <div class="reveal delay-3" style="display:flex;align-items:center;justify-content:center;gap:12px;margin-bottom:2rem">
+          <span style="font-size:0.875rem;color:var(--txt-secondary)">Monthly</span>
+          <label class="toggle" style="width:52px;height:28px" title="Toggle annual billing">
+            <input type="checkbox" id="pricing-toggle" aria-label="Toggle annual billing" />
+            <span class="toggle-track"></span>
+          </label>
+          <span style="font-size:0.875rem;color:var(--txt-secondary)">
+            Annual <span class="badge badge-accent" style="font-size:10px">Save 20%</span>
+          </span>
+        </div>
+      </div>
+
+      <div class="pricing-grid">
+
+        <!-- Starter -->
+        <div class="pricing-card reveal">
+          <div class="pricing-tier">Starter</div>
+          <div class="pricing-price">
+            <sup>$</sup><span data-price="starter">0</span>
+            <span data-billing="/month">/month</span>
+          </div>
+          <p class="pricing-desc">Perfect for casual learners getting started.</p>
+          <ul class="pricing-features">
+            <li class="pricing-feature"><span class="pricing-feature-check">✓</span> 50 AI messages/month</li>
+            <li class="pricing-feature"><span class="pricing-feature-check">✓</span> 10 Notes</li>
+            <li class="pricing-feature"><span class="pricing-feature-check">✓</span> 5 Quiz generations</li>
+            <li class="pricing-feature"><span class="pricing-feature-check">✓</span> Basic flashcards</li>
+            <li class="pricing-feature disabled"><span class="pricing-feature-check">✗</span> PDF upload</li>
+            <li class="pricing-feature disabled"><span class="pricing-feature-check">✗</span> Voice input</li>
+            <li class="pricing-feature disabled"><span class="pricing-feature-check">✗</span> Analytics dashboard</li>
+          </ul>
+          <a href="dashboard.html" class="btn btn-outline" style="width:100%;justify-content:center">Get Started Free</a>
+        </div>
+
+        <!-- Pro (Popular) -->
+        <div class="pricing-card popular reveal delay-1">
+          <div class="pricing-popular-badge">Most Popular</div>
+          <div class="pricing-tier">Pro</div>
+          <div class="pricing-price">
+            <sup>$</sup><span data-price="pro">19</span>
+            <span data-billing="/month">/month</span>
+          </div>
+          <p class="pricing-desc">For serious students who want maximum results.</p>
+          <ul class="pricing-features">
+            <li class="pricing-feature"><span class="pricing-feature-check">✓</span> Unlimited AI messages</li>
+            <li class="pricing-feature"><span class="pricing-feature-check">✓</span> Unlimited notes</li>
+            <li class="pricing-feature"><span class="pricing-feature-check">✓</span> Unlimited quizzes</li>
+            <li class="pricing-feature"><span class="pricing-feature-check">✓</span> Smart flashcards</li>
+            <li class="pricing-feature"><span class="pricing-feature-check">✓</span> PDF & file upload</li>
+            <li class="pricing-feature"><span class="pricing-feature-check">✓</span> Voice input</li>
+            <li class="pricing-feature"><span class="pricing-feature-check">✓</span> Full analytics</li>
+          </ul>
+          <a href="dashboard.html" class="btn btn-primary" style="width:100%;justify-content:center">Start 7-Day Free Trial</a>
+        </div>
+
+        <!-- Team -->
+        <div class="pricing-card reveal delay-2">
+          <div class="pricing-tier">Team</div>
+          <div class="pricing-price">
+            <sup>$</sup><span data-price="team">49</span>
+            <span data-billing="/month">/month</span>
+          </div>
+          <p class="pricing-desc">For study groups, classes, and institutions.</p>
+          <ul class="pricing-features">
+            <li class="pricing-feature"><span class="pricing-feature-check">✓</span> Everything in Pro</li>
+            <li class="pricing-feature"><span class="pricing-feature-check">✓</span> Up to 20 members</li>
+            <li class="pricing-feature"><span class="pricing-feature-check">✓</span> Shared workspaces</li>
+            <li class="pricing-feature"><span class="pricing-feature-check">✓</span> Admin dashboard</li>
+            <li class="pricing-feature"><span class="pricing-feature-check">✓</span> Priority support</li>
+            <li class="pricing-feature"><span class="pricing-feature-check">✓</span> Custom branding</li>
+            <li class="pricing-feature"><span class="pricing-feature-check">✓</span> API access</li>
+          </ul>
+          <a href="dashboard.html" class="btn btn-outline" style="width:100%;justify-content:center">Contact Sales</a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       FAQ
+  ══════════════════════════════════════ -->
+  <section class="section" id="faq" aria-labelledby="faq-title">
+    <div class="container">
+      <div class="section-header">
+        <div class="section-eyebrow reveal">❓ FAQ</div>
+        <h2 class="section-title reveal delay-1" id="faq-title">
+          Got <span class="text-gradient">Questions?</span>
+        </h2>
+        <p class="section-desc reveal delay-2">
+          Everything you need to know about StudyAI.
+        </p>
+      </div>
+
+      <div class="faq-list reveal">
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Is StudyAI really free to use?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            Yes! The Starter plan is completely free with no credit card required.
+            You get 50 AI messages, 10 notes, and 5 quiz generations per month.
+            Upgrade to Pro for unlimited access.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            What file types can I upload to the AI?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            Pro and Team users can upload PDFs, Word documents (.docx), plain text files (.txt),
+            and images. The AI will analyze the content and answer your questions about it.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            How accurate is the AI?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            StudyAI uses GPT-4 under the hood, which is one of the most accurate AI models
+            available. That said, AI can sometimes make mistakes — we always recommend
+            verifying critical information with your textbooks or instructors.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Can I cancel my subscription anytime?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            Absolutely! You can cancel your subscription at any time from your account
+            settings. You'll retain access to Pro features until the end of your
+            billing period. No hidden fees or cancellation charges.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Is my data private and secure?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            Yes. We take privacy very seriously. Your notes and conversations are encrypted
+            at rest and in transit. We never sell your data to third parties. You can
+            delete your account and all data at any time.
+          </div>
+        </div>
+
+        <div class="faq-item">
+          <button class="faq-q" aria-expanded="false">
+            Does StudyAI work on mobile?
+            <span class="faq-icon" aria-hidden="true">+</span>
+          </button>
+          <div class="faq-a" role="region">
+            Yes! StudyAI is fully responsive and works great on all devices —
+            desktop, tablet, and mobile. A native mobile app is also on our roadmap.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ══════════════════════════════════════
+       FOOTER
+  ══════════════════════════════════════ -->
+  <footer class="footer" role="contentinfo">
+    <div class="container">
+      <div class="footer-grid">
+
+        <!-- Brand -->
+        <div>
+          <a href="index.html" class="nav-logo" style="display:inline-flex;margin-bottom:1rem">
+            <div class="nav-logo-icon" aria-hidden="true">🎓</div>
+            <span class="text-gradient">StudyAI</span>
+          </a>
+          <p class="footer-brand-desc">
+            Your AI-powered study companion. Learn smarter, retain more,
+            and achieve your academic goals faster.
+          </p>
+          <div class="footer-social" style="margin-top:1.5rem">
+            <a href="#" class="footer-social-btn" aria-label="Twitter">𝕏</a>
+            <a href="#" class="footer-social-btn" aria-label="LinkedIn">in</a>
+            <a href="#" class="footer-social-btn" aria-label="GitHub">⌘</a>
+            <a href="#" class="footer-social-btn" aria-label="Discord">💬</a>
+          </div>
+        </div>
+
+        <!-- Product -->
+        <div>
+          <h3 class="footer-heading">Product</h3>
+          <ul class="footer-links">
+            <li><a href="dashboard.html" class="footer-link">Dashboard</a></li>
+            <li><a href="chat.html"      class="footer-link">AI Chat</a></li>
+            <li><a href="notes.html"     class="footer-link">Notes</a></li>
+            <li><a href="quiz.html"      class="footer-link">Quiz Generator</a></li>
+            <li><a href="flashcards.html"class="footer-link">Flashcards</a></li>
+            <li><a href="calendar.html"  class="footer-link">Calendar</a></li>
+          </ul>
+        </div>
+
+        <!-- Company -->
+        <div>
+          <h3 class="footer-heading">Company</h3>
+          <ul class="footer-links">
+            <li><a href="#" class="footer-link">About Us</a></li>
+            <li><a href="#" class="footer-link">Blog</a></li>
+            <li><a href="#" class="footer-link">Careers</a></li>
+            <li><a href="#" class="footer-link">Press</a></li>
+            <li><a href="#" class="footer-link">Contact</a></li>
+          </ul>
+        </div>
+
+        <!-- Legal -->
+        <div>
+          <h3 class="footer-heading">Legal</h3>
+          <ul class="footer-links">
+            <li><a href="#" class="footer-link">Privacy Policy</a></li>
+            <li><a href="#" class="footer-link">Terms of Service</a></li>
+            <li><a href="#" class="footer-link">Cookie Policy</a></li>
+            <li><a href="#" class="footer-link">Refund Policy</a></li>
+          </ul>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <p>© 2025 StudyAI. All rights reserved. Made with ❤️ for students.</p>
+        <div style="display:flex;align-items:center;gap:1rem">
+          <button class="btn btn-ghost btn-sm" data-theme-toggle aria-label="Toggle theme">
+            <span data-theme-icon aria-hidden="true">☀️</span>
+            <span>Toggle Theme</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </footer>
+  </main>
+
+  <!-- Floating Action Button -->
+  <button id="fab" aria-label="Quick start AI chat" title="Open AI Chat" onclick="window.location.href='chat.html'">
+    🤖
+  </button>
+  <script src="js/auth.js"></script>
+<script>
+  // Protect this page — redirect to login if not authenticated
+  if (!requireAuth()) { document.write(''); }
+  document.addEventListener('DOMContentLoaded', renderSidebarUser);
+</script>
+
+  <!-- Scripts -->
+  <script src="js/main.js"></script>
+</body>
+</html>

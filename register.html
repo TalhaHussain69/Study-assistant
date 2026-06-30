@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="Create your free StudyAI account." />
+  <title>Sign Up — StudyAI</title>
+
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+  <link rel="stylesheet" href="css/landing.css" />
+
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>" />
+
+  <style>
+    .auth-page {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: var(--sp-6);
+      position: relative;
+      overflow: hidden;
+    }
+    .auth-bg { position: absolute; inset: 0; background: var(--grad-hero); z-index: 0; }
+    .auth-glow {
+      position: absolute;
+      width: 700px; height: 700px;
+      border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(0,212,170,.18) 0%, transparent 65%);
+      top: -200px; left: 50%;
+      transform: translateX(-50%);
+      pointer-events: none;
+    }
+    .auth-card {
+      position: relative;
+      z-index: 1;
+      width: 100%;
+      max-width: 440px;
+      background: var(--bg-elevated);
+      border: 1px solid var(--border-glass);
+      border-radius: var(--r-3xl);
+      padding: var(--sp-10) var(--sp-8);
+      box-shadow: var(--shadow-lg);
+    }
+    .auth-logo {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: var(--sp-2);
+      font-family: var(--font-display);
+      font-size: var(--fs-xl);
+      font-weight: var(--fw-black);
+      margin-bottom: var(--sp-6);
+    }
+    .auth-title { font-size: var(--fs-2xl); font-weight: var(--fw-extrabold); text-align: center; margin-bottom: var(--sp-2); }
+    .auth-subtitle { font-size: var(--fs-sm); color: var(--txt-secondary); text-align: center; margin-bottom: var(--sp-8); }
+    .auth-field { margin-bottom: var(--sp-5); }
+    .auth-field label { font-size: var(--fs-sm); font-weight: var(--fw-semibold); display: block; margin-bottom: var(--sp-2); }
+    .auth-error {
+      background: rgba(255,94,125,.1);
+      border: 1px solid rgba(255,94,125,.3);
+      color: var(--clr-danger);
+      font-size: var(--fs-sm);
+      padding: var(--sp-3) var(--sp-4);
+      border-radius: var(--r-lg);
+      margin-bottom: var(--sp-5);
+      display: none;
+    }
+    .auth-error.show { display: block; animation: fadeInUp .3s ease both; }
+    .auth-footer { text-align: center; margin-top: var(--sp-6); font-size: var(--fs-sm); color: var(--txt-secondary); }
+    .auth-footer a { color: var(--clr-primary-light); font-weight: var(--fw-semibold); }
+    .password-toggle {
+      position: absolute; right: 14px; top: 50%; transform: translateY(-50%);
+      background: none; border: none; cursor: pointer; color: var(--txt-muted); font-size: 16px;
+    }
+    .pw-strength { display: flex; gap: 4px; margin-top: 8px; }
+    .pw-strength-bar { height: 4px; flex: 1; border-radius: 2px; background: var(--bg-glass); transition: background .3s; }
+    .pw-strength-label { font-size: 11px; color: var(--txt-muted); margin-top: 4px; }
+  </style>
+</head>
+<body>
+
+  <div id="cursor-dot" aria-hidden="true"></div>
+  <div id="cursor-ring" aria-hidden="true"></div>
+  <div id="toast-container" aria-live="polite"></div>
+
+  <div class="auth-page">
+    <div class="auth-bg"></div>
+    <div class="auth-glow" aria-hidden="true"></div>
+
+    <div class="auth-card anim-scale-in">
+      <a href="index.html" class="auth-logo">
+        <div class="nav-logo-icon" aria-hidden="true">🎓</div>
+        <span class="text-gradient">StudyAI</span>
+      </a>
+
+      <h1 class="auth-title">Create your account</h1>
+      <p class="auth-subtitle">Start studying smarter — it's free</p>
+
+      <div class="auth-error" id="auth-error" role="alert"></div>
+
+      <form id="register-form" novalidate>
+        <div class="auth-field">
+          <label for="reg-name">Full Name</label>
+          <input type="text" id="reg-name" class="input" placeholder="e.g. Sara Ahmed" required autocomplete="name" />
+        </div>
+
+        <div class="auth-field">
+          <label for="reg-email">Email Address</label>
+          <input type="email" id="reg-email" class="input" placeholder="you@example.com" required autocomplete="email" />
+        </div>
+
+        <div class="auth-field">
+          <label for="reg-password">Password</label>
+          <div style="position:relative">
+            <input type="password" id="reg-password" class="input" placeholder="Min. 6 characters" required autocomplete="new-password" style="padding-right:44px" />
+            <button type="button" class="password-toggle" id="toggle-pw" aria-label="Show password">👁️</button>
+          </div>
+          <div class="pw-strength" aria-hidden="true">
+            <div class="pw-strength-bar" id="bar1"></div>
+            <div class="pw-strength-bar" id="bar2"></div>
+            <div class="pw-strength-bar" id="bar3"></div>
+          </div>
+          <div class="pw-strength-label" id="pw-strength-label">Enter a password</div>
+        </div>
+
+        <div class="auth-field">
+          <label for="reg-confirm">Confirm Password</label>
+          <input type="password" id="reg-confirm" class="input" placeholder="Re-enter your password" required autocomplete="new-password" />
+        </div>
+
+        <label style="display:flex;align-items:flex-start;gap:8px;font-size:var(--fs-xs);color:var(--txt-secondary);margin-bottom:var(--sp-6);cursor:pointer">
+          <input type="checkbox" id="agree-terms" required style="margin-top:2px;cursor:pointer" />
+          I agree to the <a href="#" style="color:var(--clr-primary-light)" onclick="return false">Terms of Service</a> and <a href="#" style="color:var(--clr-primary-light)" onclick="return false">Privacy Policy</a>
+        </label>
+
+        <button type="submit" class="btn btn-primary btn-lg" style="width:100%;justify-content:center">
+          Create Free Account
+        </button>
+      </form>
+
+      <p class="auth-footer">
+        Already have an account? <a href="login.html">Log in</a>
+      </p>
+    </div>
+  </div>
+
+  <script src="js/main.js"></script>
+  <script src="js/auth.js"></script>
+  <script>
+    if (getCurrentUser()) window.location.href = 'dashboard.html';
+
+    document.getElementById('toggle-pw').addEventListener('click', () => {
+      const pw = document.getElementById('reg-password');
+      const btn = document.getElementById('toggle-pw');
+      const isPw = pw.type === 'password';
+      pw.type = isPw ? 'text' : 'password';
+      btn.textContent = isPw ? '🙈' : '👁️';
+    });
+
+    // Password strength indicator
+    const pwInput = document.getElementById('reg-password');
+    const bars = [document.getElementById('bar1'), document.getElementById('bar2'), document.getElementById('bar3')];
+    const label = document.getElementById('pw-strength-label');
+
+    pwInput.addEventListener('input', () => {
+      const val = pwInput.value;
+      let score = 0;
+      if (val.length >= 6) score++;
+      if (val.length >= 10) score++;
+      if (/[A-Z]/.test(val) && /[0-9]/.test(val)) score++;
+
+      const colors = ['var(--clr-danger)', 'var(--clr-warning)', 'var(--clr-success)'];
+      const labels = ['Weak', 'Weak', 'Medium', 'Strong'];
+
+      bars.forEach((bar, i) => {
+        bar.style.background = i < score ? colors[Math.min(score - 1, 2)] : 'var(--bg-glass)';
+      });
+      label.textContent = val.length === 0 ? 'Enter a password' : labels[score];
+    });
+
+    document.getElementById('register-form').addEventListener('submit', (e) => {
+      e.preventDefault();
+      const name     = document.getElementById('reg-name').value.trim();
+      const email    = document.getElementById('reg-email').value.trim();
+      const password = document.getElementById('reg-password').value;
+      const confirm  = document.getElementById('reg-confirm').value;
+      const agreed   = document.getElementById('agree-terms').checked;
+      const errorBox = document.getElementById('auth-error');
+
+      if (password !== confirm) {
+        errorBox.textContent = '⚠️ Passwords do not match.';
+        errorBox.classList.add('show');
+        return;
+      }
+      if (!agreed) {
+        errorBox.textContent = '⚠️ Please agree to the Terms of Service.';
+        errorBox.classList.add('show');
+        return;
+      }
+
+      const result = registerUser({ name, email, password });
+
+      if (result.success) {
+        errorBox.classList.remove('show');
+        toast(result.message, 'success', 2000);
+        setTimeout(() => window.location.href = 'dashboard.html', 600);
+      } else {
+        errorBox.textContent = '⚠️ ' + result.message;
+        errorBox.classList.add('show');
+      }
+    });
+  </script>
+</body>
+</html>
