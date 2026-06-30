@@ -25,6 +25,13 @@ Built entirely with **HTML5, CSS3 (Glassmorphism + CSS Variables), and Vanilla J
 
 ---
 
+## 📸 Screenshots
+
+### Dashboard Page
+![Dashboard Page](screenshots/dashboard.png)
+
+
+
 ## 🛠️ Tech Stack
 
 | Technology | Usage |
@@ -61,6 +68,8 @@ study-assistant/
 ├── main.js                      # Cursor, theme, toast, modal, scroll reveal
 ├── dashboard.js                   # Dashboard charts & widgets
 └── chat.js                         # AI chat + PDF summarization
+└── screenshots/
+       |__                        #All Screenshots of UI
 
 ---
 
