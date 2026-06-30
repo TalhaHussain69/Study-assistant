@@ -30,7 +30,31 @@ Built entirely with **HTML5, CSS3 (Glassmorphism + CSS Variables), and Vanilla J
 ### Dashboard Page
 ![Dashboard Page](screenshots/dashboard.png)
 
+### Login Page
+![Login Page](screenshots/login.png)
 
+### Profile Page
+![Profile Page](screenshots/profile.png)
+
+### Ai Chatbot Page
+![Ai Chatbot Page](screenshots/AI Chat.png)
+
+### Notes Page
+![Notes Page](screenshots/Notes.png)
+
+### FlashCards Page
+![FlashCards Page](screenshots/Flashcards.png)
+
+### Quiz Generator Page
+![Quiz Generator Page](screenshots/Quiz Generator.png)
+
+### Calender Page
+![Calender Page](screenshots/calender.png)
+
+### Settings Page
+![Settings Page](screenshots/settings.png)
+
+---
 
 ## 🛠️ Tech Stack
 
